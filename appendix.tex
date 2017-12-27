@@ -1,0 +1,93 @@
+\newpage
+%\appendix
+%\section*{\appendixname}
+\iflanguage{english}%
+  {\section*{Appendix}
+  \addcontentsline{toc}{section}{Appendix}
+  }%
+  {\section*{Lisad}
+  \addcontentsline{toc}{section}{Lisad}}
+
+
+\section*{I. Glossary}
+\addcontentsline{toc}{subsection}{I. Glossary}
+
+\newpage
+%=== Licence in English
+\newcommand\EngLicence{{%
+\selectlanguage{english}
+\section*{II. Licence}
+
+\addcontentsline{toc}{subsection}{II. Licence}
+
+\subsection*{Non-exclusive licence to reproduce thesis and make thesis public}
+
+I, \textbf{\student},
+
+\begin{enumerate}
+\item
+herewith grant the University of Tartu a free permit (non-exclusive licence) to:
+\begin{enumerate}
+\item[1.1]
+reproduce, for the purpose of preservation and making available to the public, including for addition to the DSpace digital archives until expiry of the term of validity of the copyright, and
+\item[1.2]
+make available to the public via the web environment of the University of Tartu, including via the DSpace digital archives until expiry of the term of validity of the copyright,
+\end{enumerate}
+
+of my thesis
+
+\textbf{\topic}
+
+supervised by \supervisor\ and \cosupervisor.
+
+\item
+I am aware of the fact that the author retains these rights.
+\item
+I certify that granting the non-exclusive licence does not infringe the intellectual property rights or rights arising from the Personal Data Protection Act. 
+\end{enumerate}
+
+\noindent
+Tartu, \today
+}}%\newcommand\EngLicence
+
+
+%=== Licence in Estonian
+\newcommand\EstLicence{{%
+\selectlanguage{estonian}
+\section*{II. Litsents}
+
+\addcontentsline{toc}{subsection}{II. Litsents}
+
+\subsection*{\topic}
+
+Mina, \textbf{\student},
+
+\begin{enumerate}
+\item
+annan Tartu Ülikoolile tasuta loa (lihtlitsentsi) enda loodud teose
+
+\textbf{\topic}
+
+mille juhendajad on \supervisor ja \cosupervisor
+
+\begin{enumerate}
+\item[1.1]
+reprodutseerimiseks säilitamise ja üldsusele kättesaadavaks tegemise eesmärgil, sealhulgas digitaalarhiivi DSpace-is lisamise eesmärgil kuni autoriõiguse kehtivuse tähtaja lõppemiseni;
+\item[1.2]
+üldsusele kättesaadavaks tegemiseks Tartu Ülikooli veebikeskkonna kaudu, sealhulgas digitaalarhiivi DSpace´i kaudu kuni autoriõiguse kehtivuse tähtaja lõppemiseni.
+\end{enumerate}
+
+
+\item
+olen teadlik, et punktis 1 nimetatud õigused jäävad alles ka autorile.
+\item
+kinnitan, et lihtlitsentsi andmisega ei rikuta teiste isikute intellektuaalomandi ega isikuandmete kaitse seadusest tulenevaid õigusi. 
+\end{enumerate}
+
+\noindent
+Tartus, \today
+}}%\newcommand\EstLicence
+
+
+%===Choose the licence in active language
+\iflanguage{english}{\EngLicence}{\EstLicence}

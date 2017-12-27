@@ -1,0 +1,54 @@
+\input{bachelors-thesis-template.tex}
+
+\newcommand{\student}{Ervin Oro}
+\newcommand{\supervisor}{Indrek Sünter}
+\newcommand{\supervisordegree}{MSc}
+\newcommand{\cosupervisor}{Indrek Sünter}
+\newcommand{\cosupervisordegree}{MSc}
+
+\newcommand{\topic}{\iflanguage{english}{Delta updates for ESTCube-2 onboard computer software}{Delta uuendused ESTCube-2 pardaarvuti tarkvarale}}
+
+
+%%% BEGIN DOCUMENT
+\begin{document}
+
+% Title page
+\input{titlepage.tex}
+
+% If the thesis is printed on both sides of the page then 
+% the second page must be must be empty. Comment this out
+% if you print only to one side of the page comment this out
+%\newpage
+%\thispagestyle{empty}    
+%\phantom{Text to fill the page}
+% END OF EXTRA PAGE WITHOUT NUMBER
+
+% Information page
+\input{infopage.tex}
+
+% Table of contents
+\newpage
+\tableofcontents
+
+% Remember to remove this from the final thesis version
+\newpage
+\listoftodos[Unsolved issues]
+% END OF TODO PAGE 
+
+
+%%% Content
+\input{sections/introduction.tex}
+\input{sections/conclusion.tex}
+
+
+% BibTeX bibliography
+\newpage
+%\bibliographystyle{alpha} %plain=[1], alpha=[BGZ09]
+%\bibliography{bachelor-thesis}
+%\addcontentsline{toc}{section}{\refname}
+
+% All extras and licence:
+\input{appendix.tex}
+
+\end{document}
+
