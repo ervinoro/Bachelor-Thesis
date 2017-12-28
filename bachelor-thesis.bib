@@ -22,6 +22,72 @@ This thesis is written in English and is 38 pages long, including 5 chapters, 6 
   Timestamp                = {28.12.2017}
 }
 
+@InProceedings{dong2009dynamic,
+  Title                    = {Dynamic linking and loading in networked embedded systems},
+  Author                   = {Dong, Wei and Chen, Chun and Liu, Xue and Bu, Jiajun and Liu, Yunhao},
+  Booktitle                = {Mobile Adhoc and Sensor Systems, 2009. MASS'09. IEEE 6th International Conference on},
+  Year                     = {2009},
+  Organization             = {IEEE},
+  Pages                    = {554--562},
+
+  Keywords                 = {Joining processes,
+Embedded system,
+Kernel,
+Ground penetrating radar,
+Geophysical measurement techniques,
+Code standards,
+Operating systems,
+Standards development,
+Costs,
+Runtime},
+  Owner                    = {Ervin Oro},
+  Timestamp                = {28.12.2017},
+  Url                      = {http://ieeexplore.ieee.org.ezproxy.utlib.ut.ee/document/5336957/}
+}
+
+@InProceedings{Dunkels2006,
+  Title                    = {Run-time dynamic linking for reprogramming wireless sensor networks},
+  Author                   = {Dunkels, Adam and Finne, Niclas and Eriksson, Joakim and Voigt, Thiemo},
+  Booktitle                = {Proceedings of the 4th international conference on Embedded networked sensor systems},
+  Year                     = {2006},
+  Organization             = {ACM},
+  Pages                    = {15--28},
+
+  Abstract                 = {From experience with wireless sensor networks it has become apparent that dynamic reprogramming of the sensor nodes is a useful feature. The resource constraints in terms of energy, memory, and processing power make sensor network reprogramming a challenging task. Many different mechanisms for reprogramming sensor nodes have been developed ranging from full image replacement to virtual machines.We have implemented an in-situ run-time dynamic linker and loader that use the standard ELF object file format. We show that run-time dynamic linking is an effective method for reprogramming even resource constrained wireless sensor nodes. To evaluate our dynamic linking mechanism we have implemented an application-specific virtual machine and a Java virtual machine and compare the energy cost of the different linking and execution models. We measure the energy consumption and execution time overhead on real hardware to quantify the energy costs for dynamic linkin.Our results suggest that while in general the overhead of a virtual machine is high, a combination of native code and virtual machine code provide good energy efficiency. Dynamic run-time linking can be used to update the native code, even in heterogeneous networks.},
+  Keywords                 = {Wireless sensor networks, Embedded systems, Operating systems, Dynamic linking, Virtual machines},
+  Owner                    = {Ervin Oro},
+  Timestamp                = {28.12.2017},
+  Url                      = {https://dl-acm-org.ezproxy.utlib.ut.ee/citation.cfm?id=1182810}
+}
+
+@InProceedings{Hjalmtysson1998,
+  Title                    = {Dynamic {C++} classes: a lightweight mechanism to update code in a running program},
+  Author                   = {Gísli Hjálmtýsson and Robert Gray},
+  Booktitle                = {Proceedings of the annual conference on USENIX Annual Technical Conference},
+  Year                     = {1998},
+  Pages                    = {6--6},
+
+  Owner                    = {Ervin Oro},
+  Timestamp                = {28.12.2017},
+  Url                      = {http://static.usenix.org/publications/library/proceedings/usenix98/full_papers/hjalmtysson/hjalmtysson_html/hjalmtysson.html}
+}
+
+@InProceedings{Kajtazovic2013,
+  Title                    = {A Component-Based Dynamic Link Support for Safety-Critical Embedded Systems},
+  Author                   = {N. Kajtazovic and C. Preschern and C. Kreiner},
+  Booktitle                = {2013 20th IEEE International Conference and Workshops on Engineering of Computer Based Systems (ECBS)},
+  Year                     = {2013},
+  Month                    = {April},
+  Pages                    = {92-99},
+
+  Abstract                 = {Safety-critical embedded systems have to undergo rigorous development process in order to ensure that their function will not compromise humans or environment where they operate. Therefore, they rely on simple and proven-in-use design. However, with growing software complexity, maintenance becomes very important aspect in safety domain. Recent approaches for managing maintenance allow to perform changes on software at design-time, which implies that the whole system has to be rebuilt when the application software changes. In this paper, we describe more flexible solution for updating the application software. We apply the component-based paradigm to construct the application software, i.e. we define a model of a software function that can be dynamically linked with the entire operating system (OS). In order to avoid the usage of the OS-provided support for dynamic linking, we design software functions as position-independent and relocation-free binaries with well-defined interfaces. With the help of component-based paradigm we show how to simplify the link support and make it suitable for safety domain.},
+  Doi                      = {10.1109/ECBS.2013.19},
+  Keywords                 = {embedded systems;object-oriented programming;operating systems (computers);safety-critical software;software maintenance;software management;software metrics;OS;application software updating;component-based dynamic link support;development process;dynamic linking;maintenance management;operating system;position-independent binaries;proven-in-use design;relocation-free binaries;safety-critical embedded system;software complexity;software function design;software maintenance;well-defined interface;Component architectures;Containers;Joining processes;Libraries;Runtime;Safety;Software;component-based engineering;dynamic linking;safety-critical embedded systems},
+  Owner                    = {Ervin Oro},
+  Timestamp                = {28.12.2017},
+  Url                      = {http://ieeexplore.ieee.org.ezproxy.utlib.ut.ee/document/6601577/}
+}
+
 @Mastersthesis{Kaesper2015,
   Title                    = {Runtime {UI} Reloading for Java},
   Abstract                 = {In order to test if an edit works as expected, developers have to go through many routine tasks. Depending on the application given it may span from multiple seconds to minutes per change. Developer tests a change on average three to four times per hour - it is obvious that the process is excessively time-consuming. To minimize the amount of time, dynamic class updating software, like JRebel, can be used. Sadly, up to the present moment, none of the available products support reloading the UI of a running desktop application. For that reason, the aim of this thesis is to bring out the possible approaches that would enable runtime UI reloading for Swing programs. Accordingly a plugin UiReload for JRebel is implemented which can detect what was changed and therefore apply the modifications to running UI components whilst losing none of the existing state. In order to reach the expected result some major challenges had to be overcome. For a start, it was necessary to determine what was changed and which objects were affected by those editions. Secondly, to make sure how to propagate those changes to a running application. Thirdly, to ascertain how to create new instances of components and finally, how to replace an old instance of a component with new, in a way that the fresh version maintains the state of the previous one. For finding the state an automatic approach was devised. As a result, with UiReload, developers can test the changes in milliseconds. This implies to the fact that there is no more need to restart the application, navigate to the changed view nor fill in forms on the way. Overall, testing changes reaches the maximum speed and simplicity.},
@@ -59,6 +125,23 @@ This thesis is written in English and is 38 pages long, including 5 chapters, 6 
   Keywords                 = {Language implementation, Truffle, Graal, dynamic software updates},
   Owner                    = {Ervin Oro},
   Timestamp                = {28.12.2017}
+}
+
+@Article{4740816220100101,
+  Title                    = {A Server-side Pre-linking Mechanism for Updating Embedded Operating System Dynamically.},
+  Author                   = {BOR-YEH SHEN and MEI-LING CHIANG},
+  Journal                  = {Journal of Information Science \& Engineering},
+  Year                     = {2010},
+  Number                   = {1},
+  Pages                    = {39},
+  Volume                   = {26},
+
+  Abstract                 = {To allow embedded operating systems to update their components on-the-fly, dynamic update mechanism is required for operating systems to be patched or added extra functionalities in without the need of rebooting the machines. However, embedded environments are usually resource-limited in terms of memory size, processing power, power consumption, and network bandwidth. Thus, dynamic update for embedded operating systems should be designed to make the best use of limited resources. In this paper, a server-side pre-linking mechanism is proposed to make dynamic updates of embedded operating system efficiently. Applying this mechanism can reduce not only memory usage and CPU processing time for dynamic update, but also data transmission size for updated components. Power consumption can be reduced as well. We have implemented this mechanism in LyraOS which is a component-based embedded operating system. Performance evaluation shows that the size of updated components applying the proposed },
+  ISSN                     = {10162364},
+  Keywords                 = {EMBEDDED computer systems, OPERATING systems (Computers), DATA transmission systems, COMPUTER storage devices, KERNEL functions, LINUX operating systems, dynamic update, embedded system, memory protection, modules, operating system},
+  Owner                    = {Ervin Oro},
+  Timestamp                = {28.12.2017},
+  Url                      = {http://www.iis.sinica.edu.tw/page/jise/2010/201001_04.html}
 }
 
 @Bachelorsthesis{Tarbe2013,
