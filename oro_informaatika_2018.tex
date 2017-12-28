@@ -28,6 +28,7 @@
 
 % Remember to remove this from the final thesis version
 \newpage
+\TODO{Remove list of todos}
 \listoftodos[Unsolved issues]
 % END OF TODO PAGE 
 
@@ -39,9 +40,11 @@
 
 % BibTeX bibliography
 \newpage
-%\bibliographystyle{alpha} %plain=[1], alpha=[BGZ09]
-%\bibliography{bachelor-thesis}
-%\addcontentsline{toc}{section}{\refname}
+\nocite{*}
+\TODO{Remove nocite}
+\bibliographystyle{alpha} %plain=[1], alpha=[BGZ09]
+\bibliography{bachelor-thesis}
+\addcontentsline{toc}{section}{\refname}
 
 % All extras and licence:
 \input{appendix.tex}

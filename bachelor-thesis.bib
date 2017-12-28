@@ -1,11 +1,100 @@
-% Encoding: UTF-8
+% This file was created with JabRef 2.10.
+% Encoding: UTF8
 
-@Comment{jabref-meta: databaseType:bibtex;}
 
-@Comment{jabref-meta: saveActions:enabled;
-date[normalize_date]
-pages[normalize_page_numbers]
-month[normalize_month]
-all-text-fields[ordinals_to_superscript]
-title[html_to_latex]
-;}
+@Bachelorsthesis{Aasavaeli2017,
+  Title                    = {Scripting Engine for Execution of Experimental Scripts on {TTÜ} Nanosatellite},
+  Abstract                 = {Main subject for this thesis is choosing a scripting engine for TTÜ (Tallinna Tehnikaülikool) nanosatellite. The scripting engine must provide functionality, like logging, system debugging, determination, and perform certain tasks, like communicating with the bus, file writing and reading. The engine’s language must be powerful enough to fill our needs, yet small and simple enough to have as small flash and RAM (Random Access Memory) footprint as possible.
+
+The scripting engine should also be implemented on an external board (STM32f3discovery). This way the engine’s flash footprint, RAM footprint and performance can be tested in our conditions.
+
+The outcome was that, both Pawn and My-Basic were implemented on the external board. The flash and RAM footprint tests along with performance tests were executed and results
+were analysed.
+
+This thesis is written in English and is 38 pages long, including 5 chapters, 6 figures and 2 tables.},
+  Author                   = {Sander Aasaväli},
+  School                   = {Tallinn University of Technology},
+  Url                      = {https://digi.lib.ttu.ee/i/?8438},
+  Year                     = {2017},
+
+  Keywords                 = {TTÜ Mektory nanosatellite, satellite, cosmos, nanosatellite, scripting engine, Ansi C, bachelor's theses},
+  Owner                    = {Ervin Oro},
+  Timestamp                = {28.12.2017}
+}
+
+@Mastersthesis{Kaesper2015,
+  Title                    = {Runtime {UI} Reloading for Java},
+  Abstract                 = {In order to test if an edit works as expected, developers have to go through many routine tasks. Depending on the application given it may span from multiple seconds to minutes per change. Developer tests a change on average three to four times per hour - it is obvious that the process is excessively time-consuming. To minimize the amount of time, dynamic class updating software, like JRebel, can be used. Sadly, up to the present moment, none of the available products support reloading the UI of a running desktop application. For that reason, the aim of this thesis is to bring out the possible approaches that would enable runtime UI reloading for Swing programs. Accordingly a plugin UiReload for JRebel is implemented which can detect what was changed and therefore apply the modifications to running UI components whilst losing none of the existing state. In order to reach the expected result some major challenges had to be overcome. For a start, it was necessary to determine what was changed and which objects were affected by those editions. Secondly, to make sure how to propagate those changes to a running application. Thirdly, to ascertain how to create new instances of components and finally, how to replace an old instance of a component with new, in a way that the fresh version maintains the state of the previous one. For finding the state an automatic approach was devised. As a result, with UiReload, developers can test the changes in milliseconds. This implies to the fact that there is no more need to restart the application, navigate to the changed view nor fill in forms on the way. Overall, testing changes reaches the maximum speed and simplicity.},
+  Author                   = {Taivo Käsper},
+  School                   = {University of Tartu},
+  Url                      = {http://comserv.cs.ut.ee/ati_thesis/datasheet.php?id=47071&year=2015&language=en},
+  Year                     = {2015},
+
+  Keywords                 = {Runtime, user interface, reloading, dynamic updating, JRebel, Java, Swing},
+  Owner                    = {Ervin Oro},
+  Timestamp                = {28.12.2017}
+}
+
+@Bachelorsthesis{Liiv,
+  Title                    = {Contact Automation For The {ESTCube-2} Mission Control System},
+  Abstract                 = {ESTCube-2 is the first student satellite project of the Estonian Student Satellite Foundation and it's objective is the technological demonstration of scientific payloads for upcoming missions. After a satellite's launch, the communication can be done through ground stations, but the contact time is very short over a limited area at a given point in time over the earth. The aim of this thesis is to design and implement a contact automation module which can schedule and execute automatic contacts with the satellite without minimal/no human intervention. The author aims to implement the first functional version of the required software module. This thesis explains the thought process, design and implementation of the software module, including the integration with the existing ESTCube Mission Control System—a combination of software and hardware that is used for monitoring and controlling the satellite after launch.},
+  Author                   = {Karel Liiv},
+  School                   = {University of Tartu},
+  Url                      = {http://comserv.cs.ut.ee/ati_thesis/datasheet.php?id=58329&year=2017&language=en},
+  Year                     = {2017},
+
+  Keywords                 = {Space technology, mission control system, ESTCube-2, contact automation},
+  Owner                    = {Ervin Oro},
+  Timestamp                = {28.12.2017}
+}
+
+@Mastersthesis{Pool2016,
+  Title                    = {Generic Reloading for Languages Based on the Truffle Framework},
+  Abstract                 = {Reloading running programs is a well-researched and increasingly popular feature of programming language implementations. There are plenty of proposed solutions for various existing programming languages, but typically the solutions target a specific language and are not reusable. In this thesis, we explored how the Truffle language implementation framework could aid language creators in adding reloading capabilities to their languages. We created a reusable reloading core that different Truffle-based languages can hook into to support dynamic updates with minimum amount of effort on their part. We demonstrate how the Truffle implementations of Python, Ruby and JavaScript can be made reloadable with the developed solution. With Truffle’s just-in-time compiler enabled, our solution incurs close to zero overhead on steady-state performance. This approach significantly reduces the effort required to add dynamic update support for existing and future languages.},
+  Author                   = {Tõnis Pool},
+  School                   = {University of Tartu},
+  Url                      = {http://comserv.cs.ut.ee/ati_thesis/datasheet.php?id=54297&year=2016&language=en},
+  Year                     = {2016},
+
+  Keywords                 = {Language implementation, Truffle, Graal, dynamic software updates},
+  Owner                    = {Ervin Oro},
+  Timestamp                = {28.12.2017}
+}
+
+@Bachelorsthesis{Tarbe2013,
+  Title                    = {Bootloader for {ESTCube-1} Command and Data Handling System and Camera module},
+  Abstract                 = {Estonian first satellite ESTCube-1 consists of several modules. The main on-board computer Command and Data Handling System (CDHS) and Camera module (CAM) have similar micro controller units: CDHS uses STM32F1 and CAM STM32F2 series micro controllers manufactured by STMicroelectronics. The goal of this thesis is to design and implement a bootloader, which enables software upgrading for CDHS and CAM, while ESTCube-1 is orbiting Earth. So far bootloader has been used many times to upgrade firmware or to boot into the main firmware. Bootloader has also successfully booted CDHS while ESTCube-1 is on low Earth orbit. While the satellite has been orbiting Earth, there has been no firmware upgrades yet. In conclusion the goals of this thesis were achieved and the end-product is actually used on the first Estonian satellite ESTCube-1.},
+  Author                   = {Karl Tarbe},
+  School                   = {University of Tartu},
+  Url                      = {http://comserv.cs.ut.ee/ati_thesis/datasheet.php?id=29401&year=2013&language=en},
+  Year                     = {2013},
+
+  Owner                    = {Ervin Oro},
+  Timestamp                = {28.12.2017}
+}
+
+@InProceedings{Xinyu2017,
+  Title                    = {A Code Self-Relocation Method for Embedded System},
+  Author                   = {T. Xinyu and Z. Changyou and L. Chen and K. Aourra and L. YuanZhang},
+  Booktitle                = {2017 IEEE International Conference on Computational Science and Engineering (CSE) and IEEE International Conference on Embedded and Ubiquitous Computing (EUC)},
+  Year                     = {2017},
+  Month                    = {July},
+  Pages                    = {688-691},
+  Volume                   = {1},
+
+  Abstract                 = {Symbol relocation is very important for program linking and execution. For modern operating systems in PC, symbol relocation process is completed by static linking or dynamic linking. For the execution of Executable and Linkable Format (ELF) file in Linux, dynamic linker will resolve symbols at runtime. However, many embedded operating systems inhibit supporting dynamic linking of ELF file, which results in the symbol relocation is not successful. In this paper, we proposed a code self-relocation method. This method doesn't need extra support from operating system, and the whole relocation process is finished by code in the program. We relocate the entry in Global Offset Table (GOT) and the pointer in structure. This method is evaluated in a program with 37 source files. The result shows that all the entries in GOT and pointers in structure have been relocated to the absolute address, and the symbol relocation is successful. It proves that the method is simple but effective for the developer.},
+  Doi                      = {10.1109/CSE-EUC.2017.131},
+  Keywords                 = {embedded systems;program compilers;ELF file;GOT;Linux;code self-relocation method;dynamic linker;dynamic linking;embedded operating systems;executable and linkable format;global offset table;program code;program execution;program linking;static linking;symbol relocation;Geophysical measurement techniques;Ground penetrating radar;Joining processes;Libraries;Loading;Operating systems;Runtime;ELF;GOT;Symbol relocation;dynamic linking;self-relocaiton},
+  Owner                    = {Ervin Oro},
+  Timestamp                = {28.12.2017},
+  Url                      = {http://ieeexplore.ieee.org.ezproxy.utlib.ut.ee/document/8005883/}
+}
+
+@comment{jabref-meta: databaseType:bibtex;}
+
+@comment{jabref-meta: saveActions:enabled;date[normalize_date]pages[no
+rmalize_page_numbers]month[normalize_month]all-text-fields[ordinals_to
+_superscript]title[html_to_latex];}
+
+@comment{jabref-entrytype: Bachelorsthesis: req[abstract;author;school;title;url;year] opt[address;month;note;type]}
+
