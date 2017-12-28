@@ -1,6 +1,6 @@
 ## Build output
 oro_informaatika_2018.pdf
-variables.tex
+variables*.tex
 
 ## Core latex/pdflatex auxiliary files:
 *.aux

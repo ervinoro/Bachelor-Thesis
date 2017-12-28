@@ -6,8 +6,11 @@ all: oro_informaatika_2018.pdf
 monitor:
 	while inotifywait -re close_write,moved_to,create .; do $(MAKE); done
 
-variables.tex: README.md
+variables_README.tex: README.md
 	(cat $< | sed 's/\(^| \(\w*\): *| .*\), \(MSc\|PhD\)  /\1  \n| \2Degree: | \3  /' | grep -v '|---|---  ' | sed 's/^# \(.*\)/| Title: | \1  /  ' | sed 's/| \(\w*\): *| \(.*\)  /\\newcommand{\\\1}{\2}/' | sed 's/^## \(.*\)/\\newcommand{\\\1}{/' ; echo '}' ) > $@
+
+variables_LOEMIND.tex: LOEMIND.md
+	(cat $< | sed 's/\(^| \(\w*\): *| .*\), \(MSc\|PhD\)  /\1  \n| \2Degree: | \3  /' | grep -v '|---|---  ' | sed 's/^# \(.*\)/| Pealkiri: | \1  /  ' | sed 's/| \(\w*\): *| \(.*\)  /\\newcommand{\\\1}{\2}/' | sed 's/^## \(.*\)/\\newcommand{\\\1}{/' ; echo '}' ) > $@
 
 
 # MAIN LATEXMK RULE
@@ -19,9 +22,9 @@ variables.tex: README.md
 # -interaction=nonstopmode keeps the pdflatex backend from stopping at a
 # missing file reference and interactively asking you for an alternative.
 
-oro_informaatika_2018.pdf: variables.tex oro_informaatika_2018.tex
-	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make $(word 2,$^)
+oro_informaatika_2018.pdf: variables_README.tex variables_LOEMIND.tex oro_informaatika_2018.tex
+	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make $(word 3,$^)
 
 clean:
 	latexmk -CA
-	rm -f variables.tex
+	rm -f variables*.tex
