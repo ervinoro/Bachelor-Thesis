@@ -9,9 +9,8 @@
 
 
 ## Abstract
-Satellites and iot devices require updates \TODO{reference}. 
-Typically \TODO{x} and \TODO{y} are done, but these have \TODO{significant drawbacks}.
-Often only small amount of functionality needs to be added to on-board software \TODO{scripting}.
+ESTCube-2 satellite on-board software requires frequently new capabilities [reference]. 
+Different methods for updating on-board software of embedded systems have been developed and used, but they are not without limitations. Full system image replacement, like what was used on ESTCube-1, consumes large amounts of bandwidth \cite{Tarbe2013, Suenter2016} and are, therefore, not viable very frequently. Virtual machine or interpretator based systems like on the TTÜ100 satellite lack behind the performance of native code and are therefore not usable for performance critical functionality \cite{Aasavaeli2017}. Approaches based on binary differences combine low bandwidth requirements with native performance, but require rewriting of entire firmware image, which is problematic since ESTCube-2 on-board computer stores firmware on flash memory with large erase blocks and limited number of write cycles [references]. Additionally, the operating system for ESTCube-2 on board computer, FreeRTOS, does not support dynamically loaded software components out of the box [reference].
 
 \TODO{One sentence summarising the main result (with the words ``here we show´´ or their equivalent).}
 \TODO{Two or three sentences explaining what the main result reveals in direct comparison to what was thought to be the case previously, or how the main result adds to previous knowledge.}
