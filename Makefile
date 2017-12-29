@@ -4,6 +4,7 @@
 all: oro_informaatika_2018.pdf
 
 monitor:
+	$(MAKE)
 	inotifywait -mre close_write,moved_to,create --exclude $$(cat .gitignore | sed '/^$$\|^#.*/d' | sed 's/\./\\./' | sed 's/*/.*/' | head -c -1 | tr '\n' '|') . | while read -r directory events filename; do $(MAKE); done
 
 variables_README.tex: Makefile README.md
