@@ -3,7 +3,7 @@
 | Autor:         | Ervin Oro  
 |---|---  
 | Juhendaja:     | Indrek Sünter, MSc  
-| Kaasjuhendaja: | \TODO{Kaasjuhendaja}, MSc  
+| Kaasjuhendaja: | \todo{kaas juhendaja}Kaas Juhendaja, MSc  
 | Mrksnad:       | \TODO{Nimekiri, võtmesõnadest}  
 | Teaduseriala:  | P175 Informaatika, süsteemiteooria  
 

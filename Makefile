@@ -8,10 +8,10 @@ monitor:
 	inotifywait -mre close_write,moved_to,create --exclude $$(cat .gitignore | sed '/^$$\|^#.*/d' | sed 's/\./\\./' | sed 's/*/.*/' | head -c -1 | tr '\n' '|') . | while read -r directory events filename; do $(MAKE); done
 
 variables_README.tex: Makefile README.md
-	(cat $(word 2,$^) | sed 's/\(^| \(\w*\): *| .*\), \(MSc\|PhD\)  /\1  \n| \2Degree: | \3  /' | grep -v '|---|---  ' | sed 's/^# \(.*\)/| Title: | \1  /  ' | sed 's/| \(\w*\): *| \(.*\)  /\\newcommand{\\\1}{\2}/' | sed 's/^## \(.*\)/\\newcommand{\\\1}{/' ; echo '}' ) > $@
+	(cat $(word 2,$^) | sed 's/^| \(\w*upervisor\): *| \([^A-Z]*\)\(\([A-Z].*\), .*  \)/| \1Titlepage: | \3\n| \1Name: | \2\4  /' | grep -v '|---|---  ' | sed 's/^# \(.*\)/| Title: | \1  /  ' | sed 's/| \(\w*\): *| \(.*\)  /\\newcommand{\\\1}{\2}/' | sed 's/^## \(.*\)/\\newcommand{\\\1}{/' ; echo '}' ) > $@
 
 variables_LOEMIND.tex: Makefile LOEMIND.md
-	(cat $(word 2,$^) | sed 's/\(^| \(\w*\): *| .*\), \(MSc\|PhD\)  /\1  \n| \2Degree: | \3  /' | grep -v '|---|---  ' | sed 's/^# \(.*\)/| Pealkiri: | \1  /  ' | sed 's/| \(\w*\): *| \(.*\)  /\\newcommand{\\\1}{\2}/' | sed 's/^## \(.*\)/\\newcommand{\\\1}{/' ; echo '}' ) > $@
+	(cat $(word 2,$^) | sed 's/^| \(\w*uhendaja\): *| \([^A-Z]*\)\(\([A-Z].*\), .*  \)/| \1Titlepage: | \3\n| \1Name: | \2\4  /' | grep -v '|---|---  ' | sed 's/^# \(.*\)/| Pealkiri: | \1  /  ' | sed 's/| \(\w*\): *| \(.*\)  /\\newcommand{\\\1}{\2}/' | sed 's/^## \(.*\)/\\newcommand{\\\1}{/' ; echo '}' ) > $@
 
 
 # MAIN LATEXMK RULE
