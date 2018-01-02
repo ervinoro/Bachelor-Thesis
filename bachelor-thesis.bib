@@ -30,6 +30,7 @@ This thesis is written in English and is 38 pages long, including 5 chapters, 6 
   Organization             = {IEEE},
   Pages                    = {554--562},
 
+  Comment                  = {SELF, pre-linking and pre-relocating with optional dynamic linking and pre-locating},
   Keywords                 = {Joining processes,
 Embedded system,
 Kernel,
@@ -41,7 +42,7 @@ Standards development,
 Costs,
 Runtime},
   Owner                    = {Ervin Oro},
-  Timestamp                = {28.12.2017},
+  Timestamp                = {30.12.2017},
   Url                      = {http://ieeexplore.ieee.org.ezproxy.utlib.ut.ee/document/5336957/}
 }
 
@@ -54,9 +55,10 @@ Runtime},
   Pages                    = {15--28},
 
   Abstract                 = {From experience with wireless sensor networks it has become apparent that dynamic reprogramming of the sensor nodes is a useful feature. The resource constraints in terms of energy, memory, and processing power make sensor network reprogramming a challenging task. Many different mechanisms for reprogramming sensor nodes have been developed ranging from full image replacement to virtual machines.We have implemented an in-situ run-time dynamic linker and loader that use the standard ELF object file format. We show that run-time dynamic linking is an effective method for reprogramming even resource constrained wireless sensor nodes. To evaluate our dynamic linking mechanism we have implemented an application-specific virtual machine and a Java virtual machine and compare the energy cost of the different linking and execution models. We measure the energy consumption and execution time overhead on real hardware to quantify the energy costs for dynamic linkin.Our results suggest that while in general the overhead of a virtual machine is high, a combination of native code and virtual machine code provide good energy efficiency. Dynamic run-time linking can be used to update the native code, even in heterogeneous networks.},
+  Comment                  = {Contiki OS, CELF, dynamic linking, relocating and loading of modules},
   Keywords                 = {Wireless sensor networks, Embedded systems, Operating systems, Dynamic linking, Virtual machines},
   Owner                    = {Ervin Oro},
-  Timestamp                = {28.12.2017},
+  Timestamp                = {30.12.2017},
   Url                      = {https://dl-acm-org.ezproxy.utlib.ut.ee/citation.cfm?id=1182810}
 }
 
@@ -71,7 +73,7 @@ Runtime},
 mission is to test Coulomb drag propulsion. Coulomb drag can be used in Low-Earth Orbit by 
 deploying and charging a tether that is used to brake the orbital velocity of the satellite and reduce 
 its orbital altitude. To test this concept, ESTCube-2 will deploy and charge a 300 m tether. Such a 
-tether could deorbit ESTCube-2 from the altitude of 700 km to 500 km in half a year.  
+tether could deorbit ESTCube-2 from the altitude of 700 km to 500 km in half a year. 
 Other payloads that are being considered for the ESTCube-2 satellite are an Earth observation 
 camera, a C-band communications system and an experimental laser communication system. 
 ESTCube-2 in-orbit demonstration platform will also be designed for other electric solar wind sail 
@@ -84,6 +86,34 @@ and system design of ESTCube-2.},
   Url                      = {https://www.researchgate.net/publication/303974831_ESTCube-2_mission_and_satellite_design}
 }
 
+@Mastersthesis{Haljaste2017,
+  Title                    = {Electronics design and testing for ESTCube-2 on-board computer system with sensors for attitude determination},
+  Abstract                 = {ESTCube-2 will be a 3U picosatellite planned to launch in 2019 to perform experiments in low Earth orbit. On-board computer system is required to control the satellite while powered up and has to provide computational power and reliable storage for other subsystems. Attitude and orbit control system is responsible for satellite’s detumbling, pointing, spin-up and for controlling thrusters. This thesis presents a prototype electronics board developed for both systems. On-board computer system features STMicroelectronics Cortex-M7 microcontroller with common bus interfaces and point-to-point signaling lines for all other systems planned for ESTCube-2. Data and programs are stored in three types of external non-volatile memories - QSPI NOR flash, FRAM and MRAM. For attitude determination sensors a dedicated connector and a demonstration prototype expansion board were developed featuring magnetometer, accelerometer and two gyroscopes. To test the developed boards simple firmware was written using manufacturer’s provided hardware abstraction layer and an initialization source code generator.},
+  Author                   = {Hannes Haljaste},
+  School                   = {University of Tartu},
+  Url                      = {http://dspace.ut.ee/handle/10062/56547},
+  Year                     = {2017},
+  Month                    = {06},
+
+  Owner                    = {Ervin Oro},
+  Timestamp                = {02.01.2018}
+}
+
+@InProceedings{Han2005,
+  Title                    = {A dynamic operating system for sensor nodes},
+  Author                   = {Han, Chih-Chieh and Kumar, Ram and Shea, Roy and Kohler, Eddie and Srivastava, Mani},
+  Booktitle                = {Proceedings of the 3rd international conference on Mobile systems, applications, and services},
+  Year                     = {2005},
+  Organization             = {ACM},
+  Pages                    = {163--176},
+
+  Abstract                 = {Sensor network nodes exhibit characteristics of both embedded systems and general-purpose systems. They must use little energy and be robust to environmental conditions, while also providing common services that make it easy to write applications. In TinyOS, the current state of the art in sensor node operating systems, reusable components implement common services, but each node runs a single statically-linked system image, making it hard to run multiple applications or incrementally update applications. We present SOS, a new operating system for mote-class sensor nodes that takes a more dynamic point on the design spectrum. SOS consists of dynamically-loaded modules and a common kernel, which implements messaging, dynamic memory, and module loading and unloading, among other services. Modules are not processes: they are scheduled cooperatively and there is no memory protection. Nevertheless, the system protects against common module bugs using techniques such as typed entry points, watchdog timers, and primitive resource garbage collection. Individual modules can be added and removed with minimal system interruption. We describe SOS's design and implementation, discuss tradeoffs, and compare it with TinyOS and with the Maté virtual machine. Our evaluation shows that despite the dynamic nature of SOS and its higher-level kernel interface, its long term total usage nearly identical to that of systems such as Matè and TinyOS.},
+  Comment                  = {PIC dynamically loadable modules, not much information},
+  Owner                    = {Ervin Oro},
+  Timestamp                = {30.12.2017},
+  Url                      = {http://static.usenix.org/event/mobisys05/tech/full_papers/han/han_html/}
+}
+
 @InProceedings{Kajtazovic2013,
   Title                    = {A Component-Based Dynamic Link Support for Safety-Critical Embedded Systems},
   Author                   = {N. Kajtazovic and C. Preschern and C. Kreiner},
@@ -93,10 +123,11 @@ and system design of ESTCube-2.},
   Pages                    = {92-99},
 
   Abstract                 = {Safety-critical embedded systems have to undergo rigorous development process in order to ensure that their function will not compromise humans or environment where they operate. Therefore, they rely on simple and proven-in-use design. However, with growing software complexity, maintenance becomes very important aspect in safety domain. Recent approaches for managing maintenance allow to perform changes on software at design-time, which implies that the whole system has to be rebuilt when the application software changes. In this paper, we describe more flexible solution for updating the application software. We apply the component-based paradigm to construct the application software, i.e. we define a model of a software function that can be dynamically linked with the entire operating system (OS). In order to avoid the usage of the OS-provided support for dynamic linking, we design software functions as position-independent and relocation-free binaries with well-defined interfaces. With the help of component-based paradigm we show how to simplify the link support and make it suitable for safety domain.},
+  Comment                  = {PIC, security focus, not really that relevant, too complex},
   Doi                      = {10.1109/ECBS.2013.19},
   Keywords                 = {embedded systems;object-oriented programming;operating systems (computers);safety-critical software;software maintenance;software management;software metrics;OS;application software updating;component-based dynamic link support;development process;dynamic linking;maintenance management;operating system;position-independent binaries;proven-in-use design;relocation-free binaries;safety-critical embedded system;software complexity;software function design;software maintenance;well-defined interface;Component architectures;Containers;Joining processes;Libraries;Runtime;Safety;Software;component-based engineering;dynamic linking;safety-critical embedded systems},
   Owner                    = {Ervin Oro},
-  Timestamp                = {28.12.2017},
+  Timestamp                = {30.12.2017},
   Url                      = {http://ieeexplore.ieee.org.ezproxy.utlib.ut.ee/document/6601577/}
 }
 
@@ -126,6 +157,24 @@ and system design of ESTCube-2.},
   Timestamp                = {28.12.2017}
 }
 
+@Article{Nilchiani2009,
+  Title                    = {Valuing software-based options for space systems flexibility},
+  Author                   = {Roshanak Nilchiani},
+  Journal                  = {Acta Astronautica},
+  Year                     = {2009},
+  Number                   = {3},
+  Pages                    = {429 - 441},
+  Volume                   = {65},
+
+  Abstract                 = {Abstract On-board software is a critical element in the operation and functionality of a space system. The functional requirements of space systems can change over time, and unforeseen failures can affect systems performance, thereby necessitating modifications and upgrades to the on-board software. Remote software upgrades as an option, can help space systems in operation to maintain their functionality in an uncertain environment, or even take advantage of uncertainty by adding novel applications or improving functionality while in space. In this paper, the concept of increasing flexibility of space systems through software is defined and some examples are discussed. The author presents a quantitative framework for measuring the value of flexibility in space systems. A case study on a direct broadcast satellite (DBS) is presented and the value of flexibility introduced to the satellite by software upgrade is measured using the flexibility framework. The quantitative flexibility framework allows decision-makers to assess the extent of software flexibility their space systems can exhibit in the face of uncertainty.},
+  Doi                      = {https://doi.org/10.1016/j.actaastro.2009.02.012},
+  ISSN                     = {0094-5765},
+  Keywords                 = {Flexibility value, Flexibility framework, Spacecraft software, Direct broadcast satellite},
+  Owner                    = {Ervin Oro},
+  Timestamp                = {02.01.2018},
+  Url                      = {http://www.sciencedirect.com/science/article/pii/S0094576509001179}
+}
+
 @Mastersthesis{Pool2016,
   Title                    = {Generic Reloading for Languages Based on the Truffle Framework},
   Abstract                 = {Reloading running programs is a well-researched and increasingly popular feature of programming language implementations. There are plenty of proposed solutions for various existing programming languages, but typically the solutions target a specific language and are not reusable. In this thesis, we explored how the Truffle language implementation framework could aid language creators in adding reloading capabilities to their languages. We created a reusable reloading core that different Truffle-based languages can hook into to support dynamic updates with minimum amount of effort on their part. We demonstrate how the Truffle implementations of Python, Ruby and JavaScript can be made reloadable with the developed solution. With Truffle’s just-in-time compiler enabled, our solution incurs close to zero overhead on steady-state performance. This approach significantly reduces the effort required to add dynamic update support for existing and future languages.},
@@ -139,7 +188,7 @@ and system design of ESTCube-2.},
   Timestamp                = {28.12.2017}
 }
 
-@Article{SHEN2010,
+@Article{Shen2010,
   Title                    = {A Server-side Pre-linking Mechanism for Updating Embedded Operating System Dynamically.},
   Author                   = {Bor-Yeh Shen and Mei-Ling Chiang},
   Journal                  = {Journal of Information Science \& Engineering},
@@ -149,10 +198,11 @@ and system design of ESTCube-2.},
   Volume                   = {26},
 
   Abstract                 = {To allow embedded operating systems to update their components on-the-fly, dynamic update mechanism is required for operating systems to be patched or added extra functionalities in without the need of rebooting the machines. However, embedded environments are usually resource-limited in terms of memory size, processing power, power consumption, and network bandwidth. Thus, dynamic update for embedded operating systems should be designed to make the best use of limited resources. In this paper, a server-side pre-linking mechanism is proposed to make dynamic updates of embedded operating system efficiently. Applying this mechanism can reduce not only memory usage and CPU processing time for dynamic update, but also data transmission size for updated components. Power consumption can be reduced as well. We have implemented this mechanism in LyraOS which is a component-based embedded operating system. Performance evaluation shows that the size of updated components applying the proposed },
+  Comment                  = {Using MMU hardware to provide virtual memory instead of relocation},
   ISSN                     = {10162364},
   Keywords                 = {EMBEDDED computer systems, OPERATING systems (Computers), DATA transmission systems, COMPUTER storage devices, KERNEL functions, LINUX operating systems, dynamic update, embedded system, memory protection, modules, operating system},
   Owner                    = {Ervin Oro},
-  Timestamp                = {29.12.2017},
+  Timestamp                = {30.12.2017},
   Url                      = {http://www.iis.sinica.edu.tw/page/jise/2010/201001_04.html}
 }
 
