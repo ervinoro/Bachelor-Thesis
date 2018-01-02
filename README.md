@@ -3,7 +3,7 @@
 | Author:       | Ervin Oro  
 |---|---  
 | Supervisor:   | Indrek Sünter, MSc  
-| Cosupervisor: | \todo{Co-supervisor}, MSc  
+| Cosupervisor: | \TODO{Co-supervisor}, MSc  
 | Keywords:     | \TODO{List, of, keywords}  
 | CERCS:        | P175 Informatics, systems theory  
 
