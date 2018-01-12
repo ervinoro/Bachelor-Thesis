@@ -1,24 +1,25 @@
 \newpage
 %\appendix
-%\section*{\appendixname}
-\iflanguage{english}%
-  {\section*{Appendix}
-  \addcontentsline{toc}{section}{Appendix}
-  }%
-  {\section*{Lisad}
-  \addcontentsline{toc}{section}{Lisad}}
+%\iflanguage{english}%
+%  {\section{Appendix}
+%  \addcontentsline{toc}{section}{Appendix}
+%  }%
+%  {\section{Lisad}
+%  \addcontentsline{toc}{section}{Lisad}}
 
+%\subsection{Glossary}
+%\addcontentsline{toc}{subsection}{I. Glossary}
 
-\section*{I. Glossary}
-\addcontentsline{toc}{subsection}{I. Glossary}
+\begin{appendices}
+\printglossaries
 
 \newpage
 %=== Licence in English
 \newcommand\EngLicence{{%
 \selectlanguage{english}
-\section*{II. Licence}
+\section{Licence}
 
-\addcontentsline{toc}{subsection}{II. Licence}
+%\addcontentsline{toc}{subsection}{II. Licence}
 
 \subsection*{Non-exclusive licence to reproduce thesis and make thesis public}
 
@@ -91,3 +92,5 @@ Tartus, \today
 
 %===Choose the licence in active language
 \iflanguage{english}{\EngLicence}{\EstLicence}
+
+\end{appendices}
