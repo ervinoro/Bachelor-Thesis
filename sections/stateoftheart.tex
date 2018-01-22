@@ -5,9 +5,16 @@ This paper is by no means first time the problem of updating embedded systems ha
 
 \subsection{Full system image replacement}
 
-For example, on ESTCube-1, one of the ways to update on-board code was to recompile the entire code-base, including any changes, upload it to the satellite, and after the next reboot of the \gls{mcu}, this new code would be active \cite{Suenter2016}. This method benefits from rather simple design: compilation of complete system image is typically the default way to produce executables with embedded operating systems from day zero of development \todo{citation?}. Additionally, by replacing the entire system image, any interoperability issues are eliminated and next to none on-board processing is required. ESTCube-1 also had the ability to keep several such system images stored at any time, allowing switching between them in case of any unexpected problems \cite{Tarbe2013}. 
+% generic overview of what the method is (+ estcube-1)
+For example, on ESTCube-1, one of the ways to update on-board code was to recompile the entire code-base, including any changes, upload it to the satellite, and after the next reboot of the \gls{mcu}, this new code would be active \cite{Suenter2016}. This method benefits from rather simple design: compilation of complete system image is typically the default way to produce executables with embedded operating systems from day zero of development \todo{citation?}. Additionally, by replacing the entire system image, any interoperability issues are eliminated and next to none on-board processing is required. Support for full image replacement is often implemented as fallback even on systems that support other more advanced update mechanisms as well \cite{Tarbe2013,Greco2005,Garrido1998}.
 
-However, this kind of simple design also poses significant drawbacks, most importantly it requires large amounts of uplink, even if the chance was minor. For example, on ESTCube-2, the size of a firmware image for the \gls{cdhs} was typically between \todo{ec1 fw size and citation}. Since upload speeds were \todo{ec1 upload speed and citation}, it took up to \todo{firmware upload time and citation}. \TODO{Since ESTCube-2 is a mostly experimental satellite, it is preferred to update it in small parts and often.}
+% dual images
+Additionally, several missions have had the ability to keep several such system images stored at any time, allowing switching between them in case of any unexpected problems. In some cases, like MINISAT01, one of the images was read-only and only other one could be modified \cite{Garrido1998}. However, in some other cases, like  ESTCube-1 \cite{Tarbe2013} and The Mars Exploration Rovers \cite{Greco2005}, it has been possible to update both firmware images independently. The former poses significant drawbacks: in the case of MINISAT01, complete firmware update took 2 full days, and for that duration the original launch firmware version had to be used \cite{Garrido1998}. That could, however, cause serious issues in case the original firmware has any significant flaws.
+
+\TODO{Few words about bootloaders on ESTCube-1 and Mars Exploration Rovers.}
+
+% drawbacks + estcube-1
+However, this kind of simple design also poses significant drawbacks, most importantly it requires large amounts of uplink, even if the chance was minor. For example, on ESTCube-1, the size of a firmware image for the \gls{cdhs} was typically between \todo{ec1 fw size and citation}. Since upload speeds were \todo{ec1 upload speed and citation}, it took up to \todo{firmware upload time and citation}. In case of the MINISAT01, full firmware update took 2 complete days, while partial update could be done in few hours \cite{Garrido1998}. In case of The Mars Exploration Rovers, replacement of entire firmware image required uplinking 8 Megabytes of data, while a patch update that they completed only required the uplinking of approximately 2 Megabytes \cite{Greco2005}. \TODO{Since ESTCube-2 is a mostly experimental satellite, it is preferred to update it in small parts and often.}
 
 \subsection{Virtual machines and script interpreters}
 
@@ -18,6 +25,14 @@ However, not all of the on-board software can be rewritten this way. Script exec
 \TODO{About actual virtual machines}
 
 \subsection{Binary differences}
+
+\TODO{Few generic words about binary differences.}
+
+One of the simplest binary difference based approaches for delta software updates was implemented on MINISAT01. Their entire firmware image consisted of 32 parts, and they could be updated separately. While updating the whole firmware took two full days, updating a single part could be done in just few hours \cite{Garrido1998}. However, this approach had a serious limitation: old and updated codes had to be exactly binary compatible, no lengths could be changed. Therefore this kind of approach is only useful for updating values of constants, since code updates typically also change the length of compiled binary.
+
+To overcome this limitation, MINISAT01 also featured third method of updating on-board software. With this method, new or updated functions were located at the end of the firmware, while old versions were kept on their original locations. Then any calls to modified functions were changed in on-board software. This was possible, since modifying function call with new location does not change the length of the call, and MINISAT01 stored its firmware in \gls{eeprom}. \cite{Garrido1998} \todo{what is Global Description Table?}
+
+A more complex approach to binary difference based software updates was taken on The Mars Exploration Rovers. They calculated differences between new and old firmware images that could start and end at arbitrary locations and change image size as well. However, to achieve this, they had to build the updated image in volatile memory and then store generated updated image in non-volatile memory. This meant, that they had to reserve full day to build 
 
 \subsection{Dynamically loaded modules}
 
