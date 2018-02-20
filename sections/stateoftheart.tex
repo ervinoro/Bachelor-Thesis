@@ -14,7 +14,7 @@ Additionally, several missions have had the ability to keep several such system 
 \TODO{Few words about bootloaders on ESTCube-1 and Mars Exploration Rovers.}
 
 % drawbacks + estcube-1
-However, this kind of simple design also poses significant drawbacks, most importantly it requires large amounts of uplink, even if the chance was minor. For example, on ESTCube-1, the size of a firmware image for the \gls{cdhs} was typically between \todo{ec1 fw size and citation}. Since upload speeds were \todo{ec1 upload speed and citation}, it took up to \todo{firmware upload time and citation}. In case of the MINISAT01, full firmware update took 2 complete days, while partial update could be done in few hours \cite{Garrido1998}. In case of The Mars Exploration Rovers, replacement of entire firmware image required uplinking 8 Megabytes of data, while a patch update that they completed only required the uplinking of approximately 2 Megabytes \cite{Greco2005}. \TODO{Since ESTCube-2 is a mostly experimental satellite, it is preferred to update it in small parts and often.}
+However, this kind of simple design also poses significant drawbacks. Most importantly, it requires large amounts of uplink, even if the chance was minor. For example, on ESTCube-1, the size of a firmware image for the \gls{cdhs} was typically between \todo{ec1 fw size and citation}. Since upload speeds were \todo{ec1 upload speed and citation}, it took up to \todo{firmware upload time and citation}. In case of the MINISAT01, full firmware update took 2 complete days, while partial update could be done in few hours \cite{Garrido1998}. In case of The Mars Exploration Rovers, replacement of entire firmware image required uplinking 8 Megabytes of data, while a patch update that they completed only required the uplinking of approximately 2 Megabytes \cite{Greco2005}. \TODO{Since ESTCube-2 is a mostly experimental satellite, it is preferred to update it in small parts and often.}
 
 \subsection{Virtual machines and script interpreters}
 
@@ -35,6 +35,10 @@ To overcome this limitation, MINISAT01 also featured third method of updating on
 A more complex approach to binary difference based software updates was taken on The Mars Exploration Rovers. They calculated differences between new and old firmware images that could start and end at arbitrary locations and change image size as well. However, to achieve this, they had to build the updated image in volatile memory and then store generated updated image in non-volatile memory. This meant that they had to reserve full day to assemble, validate and store the updated software, even though uploading took significantly less thanks to only sending patches. During that time no other activities could be carried out. They also acknowledge that "The single biggest improvement to the Mars Explorer Rovers' flight software modification process would be to reduce the amount of time necessary to stand down from nominal surface operations." \cite{Greco2005}
 
 \subsection{Dynamically loaded modules}
+
+On desktop operating system the problem of efficient software updates without updating the entire operating system has been solved long time ago by loading software modules dynamically\todo{Citation needed?}. This is greatly simplified by the existence of \gls{mmu}. Even though the operating system that will be used on ESTCube-2 \gls{obc}, FreeRTOS, does not support dynamically loaded modules \cite{Barry2005}, there are operating systems for embedded real-time systems, that support this feature. Embedded systems that have an \gls{mmu}, have used server-side pre-linking of software and then providing virtual memory space for each component \cite{Shen2010}.
+
+Systems without an \gls{mmu} will either have to determine fixed memory locations for each function which provides next to no flexibility, or have to rely on some sort of on-board linking or relocation. 
 
 
 
