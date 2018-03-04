@@ -2,7 +2,7 @@
 % Encoding: UTF8
 
 
-@Bachelorsthesis{Aasavaeli2017,
+@Thesis{Aasavaeli2017,
   Title                    = {Scripting Engine for Execution of Experimental Scripts on {TTÜ} Nanosatellite},
   Abstract                 = {Main subject for this thesis is choosing a scripting engine for TTÜ (Tallinna Tehnikaülikool) nanosatellite. The scripting engine must provide functionality, like logging, system debugging, determination, and perform certain tasks, like communicating with the bus, file writing and reading. The engine’s language must be powerful enough to fill our needs, yet small and simple enough to have as small flash and RAM (Random Access Memory) footprint as possible.
 
@@ -14,31 +14,31 @@ were analysed.
 This thesis is written in English and is 38 pages long, including 5 chapters, 6 figures and 2 tables.},
   Author                   = {Sander Aasaväli},
   School                   = {Tallinn University of Technology},
+  Type                     = {Bachelor's Thesis},
   Url                      = {https://digi.lib.ttu.ee/i/?8438},
   Year                     = {2017},
 
   File                     = {:home/ervin/Documents/ut/sources/Aasavaeli2017.pdf:PDF},
   Keywords                 = {TTÜ Mektory nanosatellite, satellite, cosmos, nanosatellite, scripting engine, Ansi C, bachelor's theses},
   Owner                    = {Ervin Oro},
-  Timestamp                = {03.01.2018}
+  Timestamp                = {04.03.2018}
 }
 
 @Electronic{Barry2005,
   Title                    = {RE: dynamic linking/loading on at91sam7s},
   Author                   = {Richard Barry},
-  HowPublished             = {\url{https://www.freertos.org/FreeRTOS_Support_Forum_Archive/September_2005/freertos_dynamic_linking_loading_on_at91sam7s_1346460.html}},
   Month                    = sep,
-  Note                     = {Last accessed on Jan 02, 2018},
   Url                      = {https://www.freertos.org/FreeRTOS_Support_Forum_Archive/September_2005/freertos_dynamic_linking_loading_on_at91sam7s_1346460.html},
   Year                     = {2005},
 
   Owner                    = {Ervin Oro},
-  Timestamp                = {02.01.2018}
+  Timestamp                = {02.01.2018#m#},
+  Urldate                  = {2018-01-02}
 }
 
 @InProceedings{Bridges2013,
   Title                    = {A baptism of fire: The {STRaND-1} nanosatellite},
-  Author                   = {Bridges, CP and Kenyon, S and Shaw, P and Simons, E and Visagie, L and Theodorou, T and Yeomans, B and Parsons, J and Lappas, V and Underwood, C and others},
+  Author                   = {Bridges, CP and Kenyon, S and Shaw, P and Simons, E and Visagie, L and Theodorou, T and Yeomans, B and Parsons, J and Lappas, V and Underwood, C and Jason, S. and Mellor, D. and Navarathinam, N. and Wellstead, P. and Schofield, A. and Linehan, R. and Barrera-Ars, J. and Dyer, B. and Liddle, D. and Sweeting, M. N.},
   Booktitle                = {Proceedings of the AIAA/USU Conference on Small Satellites},
   Year                     = {2013},
   Number                   = {SSC13-X-3},
@@ -48,7 +48,7 @@ This thesis is written in English and is 38 pages long, including 5 chapters, 6 
   Comment                  = {StrandMind Installer - volatile, limited},
   File                     = {:home/ervin/Documents/ut/sources/Bridges2013.pdf:PDF},
   Owner                    = {Ervin Oro},
-  Timestamp                = {03.01.2018},
+  Timestamp                = {04.03.2018},
   Url                      = {https://digitalcommons.usu.edu/smallsat/2013/all2013/115/}
 }
 
@@ -109,13 +109,13 @@ tether could deorbit ESTCube-2 from the altitude of 700 km to 500 km in half a y
 Other payloads that are being considered for the ESTCube-2 satellite are an Earth observation 
 camera, a C-band communications system and an experimental laser communication system. 
 ESTCube-2 in-orbit demonstration platform will also be designed for other electric solar wind sail 
-experiments outside of the influence of Earth’s magnetic field. The satellite bus will be integrated 
+experiments outside of the influence of Earth{\textquoteright}s magnetic field. The satellite bus will be integrated 
 into one system that could also be reused for different types of missions. The integrated system is 
 developed to maximise the space for payloads on a nanosatellite. This paper presents the payloads 
 and system design of ESTCube-2.},
   File                     = {:home/ervin/Documents/ut/sources/Ehrpais2016.pdf:PDF},
   Owner                    = {Ervin Oro},
-  Timestamp                = {03.01.2018},
+  Timestamp                = {04.03.2018},
   Url                      = {https://www.researchgate.net/publication/303974831_ESTCube-2_mission_and_satellite_design}
 }
 
@@ -144,7 +144,7 @@ and system design of ESTCube-2.},
   Booktitle                = {2005 IEEE International Conference on Systems, Man and Cybernetics},
   Year                     = {2005},
   Month                    = oct,
-  Pages                    = {8--13Vol. 1},
+  Pages                    = {8--13},
   Volume                   = {1},
 
   Abstract                 = {The Mars exploration rovers (MER) flight software (FSW) was designed from the outset to be modified during operations. Two principal methods were envisioned: modifying (patch) the existing image, or entirely replacing (load) the existing image with a new version. In fact, both methods have been successfully used since the rovers landed in January of 2004. This paper discusses the content of the uplink products that are sent to the rover, the planning of the patch and load activities, the testing of the products and procedures, and the actual operations themselves. Lessons learned and application to future missions are also discussed.},
@@ -180,9 +180,10 @@ and system design of ESTCube-2.},
   Pages                    = {163--176},
 
   Abstract                 = {Sensor network nodes exhibit characteristics of both embedded systems and general-purpose systems. They must use little energy and be robust to environmental conditions, while also providing common services that make it easy to write applications. In TinyOS, the current state of the art in sensor node operating systems, reusable components implement common services, but each node runs a single statically-linked system image, making it hard to run multiple applications or incrementally update applications. We present SOS, a new operating system for mote-class sensor nodes that takes a more dynamic point on the design spectrum. SOS consists of dynamically-loaded modules and a common kernel, which implements messaging, dynamic memory, and module loading and unloading, among other services. Modules are not processes: they are scheduled cooperatively and there is no memory protection. Nevertheless, the system protects against common module bugs using techniques such as typed entry points, watchdog timers, and primitive resource garbage collection. Individual modules can be added and removed with minimal system interruption. We describe SOS's design and implementation, discuss tradeoffs, and compare it with TinyOS and with the Maté virtual machine. Our evaluation shows that despite the dynamic nature of SOS and its higher-level kernel interface, its long term total usage nearly identical to that of systems such as Matè and TinyOS.},
-  Comment                  = {PIC dynamically loadable modules, not much information},
+  Comment                  = {PIC dynamically loadable modules.
+Modules access kernel functions using a jump table. Modules register their functions.},
   Owner                    = {Ervin Oro},
-  Timestamp                = {30.12.2017},
+  Timestamp                = {03.03.2018},
   Url                      = {http://static.usenix.org/event/mobisys05/tech/full_papers/han/han_html/}
 }
 
@@ -218,18 +219,35 @@ and system design of ESTCube-2.},
   Timestamp                = {03.01.2018}
 }
 
-@Bachelorsthesis{Liiv2017,
+@Book{Levine1999,
+  Title                    = {Linkers and Loaders},
+  Author                   = {John R. Levine},
+  Publisher                = {Morgan Kaufmann},
+  Year                     = {1999},
+
+  Address                  = {San Francisco},
+  Month                    = oct,
+  Series                   = {The Morgan Kaufmann Series in Software Engineering and Programming},
+
+  ISBN                     = {1-55860-496-0},
+  Owner                    = {Ervin Oro},
+  Timestamp                = {04.03.2018},
+  Url                      = {http://www.iecc.com/linker/}
+}
+
+@Thesis{Liiv2017,
   Title                    = {Contact Automation For The {ESTCube-2} Mission Control System},
   Abstract                 = {ESTCube-2 is the first student satellite project of the Estonian Student Satellite Foundation and it's objective is the technological demonstration of scientific payloads for upcoming missions. After a satellite's launch, the communication can be done through ground stations, but the contact time is very short over a limited area at a given point in time over the earth. The aim of this thesis is to design and implement a contact automation module which can schedule and execute automatic contacts with the satellite without minimal/no human intervention. The author aims to implement the first functional version of the required software module. This thesis explains the thought process, design and implementation of the software module, including the integration with the existing ESTCube Mission Control System—a combination of software and hardware that is used for monitoring and controlling the satellite after launch.},
   Author                   = {Karel Liiv},
   School                   = {University of Tartu},
+  Type                     = {Bachelor's Thesis},
   Url                      = {http://comserv.cs.ut.ee/ati_thesis/datasheet.php?id=58329&year=2017&language=en},
   Year                     = {2017},
 
   File                     = {:home/ervin/Documents/ut/sources/Liiv2017.pdf:PDF},
   Keywords                 = {Space technology, mission control system, ESTCube-2, contact automation},
   Owner                    = {Ervin Oro},
-  Timestamp                = {03.01.2018}
+  Timestamp                = {04.03.2018}
 }
 
 @Article{Nilchiani2009,
@@ -268,13 +286,13 @@ and system design of ESTCube-2.},
 @Electronic{Riemersm,
   Title                    = {The pawn language},
   Author                   = {Thiadmer Riemersma},
-  HowPublished             = {\url{https://www.compuphase.com/pawn/pawn.htm}},
   Month                    = oct,
   Url                      = {https://www.compuphase.com/pawn/pawn.htm},
   Year                     = {2017},
 
   Owner                    = {Ervin Oro},
-  Timestamp                = {23.02.2018}
+  Timestamp                = {23.02.2018},
+  Urldate                  = {2018-02-23}
 }
 
 @Article{Shen2010,
@@ -352,17 +370,18 @@ and system design of ESTCube-2.},
   Url                      = {http://ieeexplore.ieee.org.ezproxy.utlib.ut.ee/document/7498202/}
 }
 
-@Bachelorsthesis{Tarbe2013,
+@Thesis{Tarbe2013,
   Title                    = {Bootloader for {ESTCube-1} Command and Data Handling System and Camera module},
   Abstract                 = {Estonian first satellite ESTCube-1 consists of several modules. The main on-board computer Command and Data Handling System (CDHS) and Camera module (CAM) have similar micro controller units: CDHS uses STM32F1 and CAM STM32F2 series micro controllers manufactured by STMicroelectronics. The goal of this thesis is to design and implement a bootloader, which enables software upgrading for CDHS and CAM, while ESTCube-1 is orbiting Earth. So far bootloader has been used many times to upgrade firmware or to boot into the main firmware. Bootloader has also successfully booted CDHS while ESTCube-1 is on low Earth orbit. While the satellite has been orbiting Earth, there has been no firmware upgrades yet. In conclusion the goals of this thesis were achieved and the end-product is actually used on the first Estonian satellite ESTCube-1.},
   Author                   = {Karl Tarbe},
   School                   = {University of Tartu},
+  Type                     = {Bachelor's Thesis},
   Url                      = {http://comserv.cs.ut.ee/ati_thesis/datasheet.php?id=29401&year=2013&language=en},
   Year                     = {2013},
 
   File                     = {:home/ervin/Documents/ut/sources/Tarbe2013.pdf:PDF},
   Owner                    = {Ervin Oro},
-  Timestamp                = {03.01.2018}
+  Timestamp                = {04.03.2018}
 }
 
 @InProceedings{Xinyu2017,
@@ -389,5 +408,5 @@ and system design of ESTCube-2.},
 rmalize_page_numbers]month[normalize_month]all-text-fields[ordinals_to
 _superscript]title[html_to_latex];}
 
-@comment{jabref-entrytype: Bachelorsthesis: req[abstract;author;school;title;url;year] opt[address;month;note;type]}
+@comment{jabref-entrytype: Thesis: req[abstract;author;school;title;type;url;year] opt[address;month;note]}
 

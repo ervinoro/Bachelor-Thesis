@@ -37,7 +37,7 @@
 % \usepackage[latin1]{inputenc}
 % \usepackage[latin5]{inputenc}
 %%\usepackage[utf8]{inputenc} %Package inputenc Error: Unicode char ´ (U+B4) not set up for use with LaTeX
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc} %Absolutely critical for *hyphenation* of words with non-ASCII letters.
 
 % Typeset text in Times Roman instead of Computer Modern (EC)
@@ -64,11 +64,46 @@
   \renewcommand{\appendixname}{Lisad}%
 }
 
+\usepackage{csquotes}
+\usepackage[style=apa, citestyle=authoryear-icomp, apabackref=true, url=false, backend=biber]{biblatex}
+\addbibresource{bachelor-thesis.bib}
 
-\usepackage{natbib}
-\renewcommand{\cite}{\citep}
-\usepackage{apalike}
-\bibliographystyle{apalike}
+% Use parens by default and set entire name as hyperlink
+\DeclareCiteCommand{\cite}[\mkbibparens]
+{\usebibmacro{prenote}}
+{\usebibmacro{citeindex}%
+	\printtext[bibhyperref]{\usebibmacro{cite}}}
+{\multicitedelim}
+{\usebibmacro{postnote}}
+
+\DeclareCiteCommand{\textcite}
+{\boolfalse{cbx:parens}}
+{\usebibmacro{citeindex}%
+	\printtext[bibhyperref]{\usebibmacro{textcite}}}
+{\ifbool{cbx:parens}
+	{\bibcloseparen\global\boolfalse{cbx:parens}}
+	{}%
+	\multicitedelim}
+{\usebibmacro{textcite:postnote}}
+
+% Display isbn
+\renewbibmacro*{doi+eprint+url}{%
+	\printfield{isbn}%
+	\newunit\newblock
+	\iftoggle{bbx:doi}
+	{\printfield{doi}%
+		\iffieldundef{doi}{}{\renewcommand*{\finentrypunct}{\relax}}}
+	{}%
+	\newunit\newblock
+	\iftoggle{bbx:eprint}
+	{\usebibmacro{eprint}%
+		\iffieldundef{eprint}{}{\renewcommand*{\finentrypunct}{\relax}}}
+	{}%
+	\newunit\newblock
+	\iftoggle{bbx:url}
+	{\usebibmacro{url+urldate}%
+		\iffieldundef{url}{}{\renewcommand*{\finentrypunct}{\relax}}}
+	{}}
 
 
 % General packages for math in general, theorems and symbols 
