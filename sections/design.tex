@@ -5,6 +5,18 @@ After use cases and existing solutions were analyzed, it was determined, that ex
 
 \subsection{Requirements}
 
+Software updating system, that would be more suitable for ESTCube-2 than any existing alternatives, must:
 
+\begin{itemize}
+	\item allow addition of program code without the need to re-transmit significant portions of already existing code.
+	\item allow changing a subset of existing code without the need to re-transmit significant portions of unchanged code.
+	\item not require on-board modifications of uploaded code. This makes it possible to store code directly in internal Flash in case external memory modules are unavailable. 
+	\item not depend on \gls{os} features unavailable in FreeRTOS.
+	\item not significantly reduce code performance compared to system that uses full image replacement.
+	\item support full inter-component communication. This enables any unforeseen updates as well, which a predefined \gls{api} could limit.
+	\item \TODO{other requirements}
+\end{itemize}
 
 \subsection{Proposed solution}
+
+
