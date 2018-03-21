@@ -13,6 +13,16 @@ As it was on ESTCube-1, a minor code modification could result in binary differe
 
 \subsection{Use cases during ESTCube-2 mission}
 
+\subsubsection{Hardware, on which the software will be updated}
+
+ESTCube-2 \gls{obc} will be centered around an STM32F767IIT6 \gls{mcu}, which has 2 \glspl{mb} of internal Flash and 516 \glspl{kb} of internal \gls{sram}. For algorithm variables the \gls{obc} has 2 \glspl{mb} of \gls{mram}. For external configuration tables, error logs, on-board statistics, and other data without strict latency restrictions, it has 500 \glspl{kb} of \gls{fram}. Mass storage for firmware versions, measurements, and payload data is provided by 64 \glspl{mb} of external Flash. \cite{Haljaste2017}
+
+In case of issues with the satellite, it might be necessary to boot the \gls{obc} without external devices. This means that at least critical software components must be stored in the internal flash.
+
+Flash memory consists of sectors, which can be up to 256 \glspl{kb} in size. In order to edit any data already written to the memory, entire sector must be erased and rewritten. \cite{STMicroelectronics2018}
+
+\subsubsection{Types of updates}
+
 Due to limited number of suitable launches (caused mostly by limited funding possibilities), it might happen that some software functionality is not completed or sufficiently tested before the launch. In such case, significant amount of new code would need to be added to the firmware with an update. Additionally, some previous code would need to be modified to make use of this new functionality. However, largest parts of the firmware by size - \gls{os}, \gls{hal} and drivers - must definitely be finalized before the launch in order to enable successful satellite operation. This means that the size of even the largest such update would stay under about $20\%$.
 
 Several software components are experimental. In order to assess properties of novel solutions, they need to be compared with existing methods, which could mean the need to deploy alternative algorithms for some period of time. However, swapping out a software component could not cause changes larger than introducing a new feature.
@@ -23,4 +33,4 @@ When bugs are discovered in on-board software, a fix needs to be developed and d
 
 Unforeseen issues are also possible with the satellite hardware, due to the use of \gls{cots} components, extreme miniaturization, and educational nature of development process. Some of them could be circumvented with software workarounds. These can range from simple code changes to addition of completely new functionality.
 
-Lastly, the main mission of ESTCube-2 is to conduct experiments, like unreeling the E-Sail. During such experiment, it might be useful to rapidly deploy new small subroutines that handle aspects of the experiment that were not predicted beforehand.
+Lastly, the main mission of ESTCube-2 is to conduct experiments, like unreeling the plasma brake tether. During such experiment, it might be useful to rapidly deploy new small subroutines that handle aspects of the experiment that were not predicted beforehand.
