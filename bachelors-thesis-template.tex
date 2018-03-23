@@ -23,7 +23,8 @@
 %\setlength{\paperheight}{29.7cm}
 %\setlength{\textwidth}{16cm}
 %\setlength{\textheight}{25cm}
-\renewcommand{\baselinestretch}{1.2}
+\usepackage{setspace}
+\setstretch{1.2}
 
 
 % When you write in Estonian then you want to use text with right character set
@@ -156,9 +157,15 @@
 \usepackage{tabu}   % Wide lines in tables
 \usepackage{xspace} % Non-eatable spaces in macros
 
+% For adding notes to tables
+\usepackage[flushleft]{threeparttable}
+
 % Including graphical images and setting the figure directory
 \usepackage{graphicx}
 \graphicspath{{figures/}}
+
+% Figure should always appear after definition
+\usepackage{flafter}
 
 % Packages for getting clickable links in PDF file
 %\usepackage{hyperref}
@@ -234,6 +241,12 @@
   stringstyle=\color{mauve},       % string literal style
   escapeinside={\%*}{*)},          % if you want to add a comment within your code
   morekeywords={*,game, fun}       % if you want to add more keywords to the set
+}
+\input{arm-assembler-latex-listings/lstlangarm.sty}
+\lstdefinestyle{asm}{
+	language=[ARM]Assembler,
+	basicstyle=\footnotesize\ttfamily,
+	commentstyle=\itshape\color{purple!40!black},
 }
 
 
