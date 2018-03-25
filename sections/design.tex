@@ -20,10 +20,10 @@ Software updating system, that would be more suitable for ESTCube-2 than any exi
 \subsection{Proposed solution}
 
 % divided into firmware and functions
-Proposed solution divides on-board software into two parts: firmware (startup script, \gls{hal}, \gls{os}, and critical device drivers) and application software (everything else) (figure \ref{fig:swOrg}). Firmware would be updateable by means of full image replacement, similar to how updates worked on ESTCube-1, since it is expected to be updated rarely, if ever, and is too critical to apply experimental updating methods to it. 
+Proposed solution divides on-board software into two parts: firmware (startup script, \gls{hal}, \gls{os}, and critical device drivers) and application software (everything else) (figure \ref{fig:swOrg}). Firmware would be updateable by means of full image replacement, similar to how updates worked on ESTCube-1, including keeping two versions. This is proposed since firmware is expected to be updated rarely, if ever, and is too critical to apply experimental updating methods to it. 
 
 % divided by function
-Application software, on the other hand, would be divided into parts, so that each function would be separately. Each application function would be prepended with a short header (table \ref{tab:header}). They would have a unique ID and version number that matches with documentation and is used internally when calling functions. Each function could then be independently updated, added or removed.
+Application software, on the other hand, would be divided into parts, so that each function would be separately. Each application function would be prepended with a short header (table \ref{tab:header}). Each function could then be independently updated, added or removed.
 
 \begin{figure}[h]
 	\centering
@@ -68,13 +68,11 @@ Application software, on the other hand, would be divided into parts, so that ea
 \end{table}
 
 % snapshots
-On the ground during compilation correctness of function usage, function version dependencies etc should be checked. Dependencies would be managed by a system of snapshots similar to git: after new functionality has been developed and tested, current version of all functions is recorded, \gls{mcs} will then determine what functions differ when compared to satellites internal storage, and uploads those.
+On the ground during compilation correctness of function usage, function version dependencies etc should be checked. Dependencies would be managed by a system of snapshots similar to git: after new functionality has been developed and tested, current version of all functions is recorded, \gls{mcs} will then determine what functions differ when compared to satellites internal storage, and upload those.
 
 \subsubsection{On-board storage of application software}
 
-Main focus is on storing application functions in internal Flash. While Flash memory does not support deleting of changing any data other that deleting entire sector, it can be used as appendable storage. Functions would therefore be written to flash sequentially as they arrive. Additionally, Flash allows the addition of zeros into data. This allows effectively the deletion of functions, by replacing some pre-defined area of function header with zeros. In order to change a function, a new version would simply be appended to the storage. If several versions of a function are found in memory, the last one would be considered correct.
-
-New and updated function binaries are written to the end of flash. New functions are immediately written to the function table, but for updated functions, previous version is marked obsolete but function table is not immediately changed. That way during next boot previous version will be ignored and function table in RAM will get the address of the new version.
+Main focus is on storing application functions in internal Flash. While Flash memory does not support deleting of changing any data other that deleting entire sector, it can be used as appendable storage. Functions would therefore be written to flash sequentially as they arrive. Additionally, Flash allows the addition of zeros into data. This allows marking functions as disabled, by replacing some pre-defined area of function header with zeros (type in table \ref{tab:header}). In order to change a function, a new version would simply be appended to the storage. If several versions of a function are found in memory, the last one would be considered correct.
 
 \subsubsection{Linking}
 
@@ -84,27 +82,27 @@ Calling application functions is more tricky, as they can move around in memory.
 
 Application functions can call each other by using a system-global offset table. This table contains the current memory address for each function. It is stored in volatile internal \gls{sram} and re-created every time the system boots (by walking over all stored functions and storing the address where each function appears last). It can be also changed during runtime, when new functions are added. Changing it on runtime when a function is changed, requires additional checks, to guarantee, that previous memory address does not remain in use (as some function pointer somewhere) and is therefore out of the scope of this work, but is potential future improvement.
 
-Function table can not be implemented as branch table, as flash and ram are too far away in the memory. Function table will contain function pointers, 4 bytes per function. Storing 3 bytes per function would require 2 instructions additional overhead per function call, so it was decided that 4 bytes per function will be stored (Appendix \ref{apx:calls}). Pointers will be pointing to the first instruction of the function (after header).
+Function table can not be implemented as branch table, as flash and ram are too far away in the memory. Function table would therefore contain function pointers, 4 bytes per function. Storing 3 bytes per function would require 2 instructions additional overhead per function call, so it was decided that 4 bytes per function will be stored (Appendix \ref{apx:calls}). Pointers will be pointing to the first instruction of the function (after header).
 
 Function table should be periodically checked for errors. Function checksums should be checked during generation of the function table. During reboot flash memory can also be defragmented.
 
 \subsubsection{Compiling application functions}
 
-Compiler will have header available, that contains preprocessor function-like macros for each packaged function (macros will have exactly the same name as the functions would). The macro that corresponds to the function being compiled, will be removed using #undefine. Such approach allows separation of functions be invisible to the developers.
+Compilers support function call indirection out of the box for \gls{pic} code, but since this proposal includes separating all functions, default tools fail to merge \glspl{got} properly. To avoid having to modify compiler itself, a way to rewrite all function calls using preprocessor was devised.
 
-For calling important functions, the checksum of the function table can be checked immideately before jumping. Normally this is not done.
+Compiler will have header available, that contains preprocessor function-like macros for each application function that have matching names with functions (figure \ref{fig:macro}). They will contain instructions to read function address from function table, cast it to the function type, cast all arguments to required types, and call the function.  The macro that corresponds to the function being compiled, will be removed using \texttt{\#undefine}. Such approach allows separation of functions be invisible to the developers.
 
-Macro will not call any functions to determine the location of the function.
-
-Header file will contain macros and corresponding function type definitions. Per coding convention, typedefs will have \_t suffix. Beginning of the type name will match the function name.
-
-Macro will contain rule to read function address from function table. Function address location in function table is calculated by python preprocessor that generated the header. Then functions address will be casted to the function type, all arguments will be casted to required types and function will be called.
-
+\begin{figure} [htb]
 \begin{lstlisting}[language=C]
 typedef void (*stuffDoer_t)();
 define stuffDoer() (*((stuffDoer_t)(*((uint32_t *) 0x20000000))))()
 \end{lstlisting}
+\caption{Example call interception macro for hypothetical function called \texttt{stuffDoer()}.}
+\label{fig:macro}
+\end{figure}
+
+For calling important functions, the checksum of the function table can be checked immediately before jumping. Normally this is not done.
 
 \subsubsection{Global variables}
 
-Globals must be compiled into object files - compiler decides their length. Compilation must be  - fdata-sections, then linker can place them in memory. Functions must be linked with the globals available and later separated from binary using objcopy.
+Globals would be compiled into object files - compiler decides their length. Compilation should be  \texttt{-fdata-sections}, then linker can place them in memory independently. Functions would be linked with the globals available and later separated from binary using \texttt{objcopy}.

@@ -13,6 +13,45 @@
 \printglossaries
 
 \newpage
+\section{Indirect function calls}
+\label{apx:calls}
+\begin{lstlisting}[style=asm]
+// Experiment to quantify the exact memory/speed tradeoff when using 24 vs 32 bits per function pointer in function table
+// Decision: 32 bits makes more sense in this case
+.syntax unified
+.cpu cortex-m7
+.thumb
+
+function: // Function to be called
+bx lr // Immideately return
+
+jump32: // How would function call overhead look like in case of 32 bits of RAM per function pointer
+ldr r0, [r1]
+bx r0
+
+jump24: // How would function call overhead look like in case of 24 bits of RAM per function pointer
+ldr r0, [r1]
+lsr r0, r0, #8
+orr r0, 0x08000000
+bx r0
+
+.type  Reset_Handler, %function
+Reset_Handler:
+ldr sp, =_estack
+ldr r1, =function // Load function pointer into register 1
+bl jump32
+sub r1, #1 // Subtract one byte from the label address because 24 bits have to be right-aligned
+bl jump24
+loop:
+b loop
+
+.section  .isr_vector,"a" // Interrupt Service Routines vector table, "a"llocatable
+g_pfnVectors:
+.word _estack // End of stack; defined in linkerscript
+.word Reset_Handler
+\end{lstlisting}
+
+\newpage
 %=== Licence in English
 \newcommand\EngLicence{{%
 \selectlanguage{english}
@@ -91,46 +130,5 @@ Tartus, \today
 
 %===Choose the licence in active language
 \iflanguage{english}{\EngLicence}{\EstLicence}
-
-\newpage
-\section{Indirect function calls}
-\label{apx:calls}
-\begin{lstlisting}[style=asm]
-// Experiment to quantify the exact memory/speed tradeoff when using 24 vs 32 bits per function pointer in function table
-// Decision: 32 bits makes more sense in this case
-.syntax unified
-.cpu cortex-m7
-.thumb
-
-function: // Function to be called
-bx lr // Immideately return
-
-jump32: // How would function call overhead look like in case of 32 bits of RAM per function pointer
-ldr r0, [r1]
-bx r0
-
-jump24: // How would function call overhead look like in case of 24 bits of RAM per function pointer
-ldr r0, [r1]
-lsr r0, r0, #8
-orr r0, 0x08000000
-bx r0
-
-.type  Reset_Handler, %function
-Reset_Handler:
-ldr sp, =_estack
-ldr r1, =function // Load function pointer into register 1
-bl jump32
-sub r1, #1 // Subtract one byte from the label address because 24 bits have to be right-aligned
-bl jump24
-loop:
-b loop
-
-.section  .isr_vector,"a" // Interrupt Service Routines vector table, "a"llocatable
-g_pfnVectors:
-.word _estack // End of stack; defined in linkerscript
-.word Reset_Handler
-\end{lstlisting}
-
-
 
 \end{appendices}
