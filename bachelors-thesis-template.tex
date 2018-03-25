@@ -175,6 +175,11 @@
 \usepackage{url}
 
 \usepackage[acronym,toc,numberedsection,automake]{glossaries}
+\glsenableentrycount
+\renewcommand\gls\cgls
+\renewcommand\glspl\cglspl
+\renewcommand\Gls\cGls
+\renewcommand\Glspl\cGlspl
 \makeglossaries
 \input{glossary.tex}
 

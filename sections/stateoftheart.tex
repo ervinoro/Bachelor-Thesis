@@ -18,9 +18,9 @@ However, this kind of simple design also poses significant drawbacks. Most impor
 
 \subsection{Virtual machines and script interpreters}
 
-Another method that is commonly used when new code needs to be uploaded frequently and in small parts, is utilize virtualization techniques on board. For example interpreted scripting language pawn script was used on ESTCube-1 \cite{Suenter2016} and will be used on TTÜ100 satellite \cite{Aasavaeli2017}. With this approach some parts of the code are written in native code and some as scripts. Since scripts only interact with rest of the system through predefined API-s, they can be modified without influencing any other parts of the system. Thanks to the abstraction layer that the script interpreter provides, script files can be moved and rearranged without difficulty \cite{Riemersm}.
+Another method that is commonly used when new code needs to be uploaded frequently and in small parts, is utilize virtualization techniques on board. For example interpreted scripting language pawn script was used on ESTCube-1 \cite{Suenter2016} and will be used on TTÜ100 satellite \cite{Aasavaeli2017}. With this approach some parts of the code are written in native code and some as scripts. Since scripts only interact with rest of the system through predefined \glspl{api}, they can be modified without influencing any other parts of the system. Thanks to the abstraction layer that the script interpreter provides, script files can be moved and rearranged without difficulty \cite{Riemersm}.
 
-However, not all of the on-board software can be rewritten this way. Script execution is significantly slower than the that of a native code \todo{script vs native speed comparison}. Additionally, scripts have limited access to other system resources through predefined API-s.
+However, not all of the on-board software can be rewritten this way. Script execution is significantly slower than the that of a native code \todo{script vs native speed comparison}. Additionally, scripts have limited access to other system resources through predefined \glspl{api}.
 
 \TODO{About actual virtual machines}
 
