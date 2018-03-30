@@ -113,6 +113,3 @@ In order to simplify the design, globals would be treated very similarly to func
 
 Memory space after .data and before heap would be reserved for updatable globals. Linker would decide position for each variable in that area, and then all functions using the variable could be statically pre-linked on ground. Headers for globals would contain appropriate type, and additionally the memory address allocated for this variable. During boot, when function addresses are being added to offset table, global variables would be copied to respective addresses. As with function, latest occurrence overrides any previous ones.
 
-\subsubsection{Implementation details}
-
-Set of python scripts was developed to aid with function compilation and packaging. Functions were discovered and allocated by searching function definitions from all source files. Global variables were extracted from symbol tables after all object files were compiled. Reason for this difference is that argument types must also be know about functions. Data about functions and globals, along with respective object codes, was stored in a SQLite3 database. Scripts were also created for generating interception header, linkerscript, and packages with headers.
