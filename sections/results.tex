@@ -1,11 +1,13 @@
 \newpage
-\section{Results}
+\section{Testing}
 
 Designed update system was implemented. Viability of such solution was tested simulated updates to development version of firmware running on prototype board.
 
 \subsection{Implementation details}
 
 Set of python scripts was developed to aid with function compilation and packaging. Functions were discovered and allocated by searching function definitions from all source files. Global variables were extracted from symbol tables after all object files were compiled. Reason for this difference is that argument types must also be know about functions. Data about functions and globals, along with respective object codes, was stored in a SQLite3 database. Scripts were also created for generating interception header, linkerscript, and packages with headers.
+
+Function table format was decided. It could not be implemented as branch table, as internal Flash and \gls{sram} are too far away in the memory space. Function table was therefore set to contain pointers, 4 bytes per function. Storing 3 bytes per function would require 2 instructions additional overhead per function call, so it was decided that 4 bytes per function will be stored (Appendix \ref{apx:calls}). Pointers are to point to the first instruction of the function (right after header).
 
 A function was added to firmware, that runs right before main function. It starts walking package headers from the beginning of space allocated for such packages, jumping over function content based on length, and stops on first header with type nothing (\texttt{0xff}). Function pointers are added to function table, and global variables copied to their respective allocated memory areas.
 
@@ -48,13 +50,12 @@ int function() { int a[] = {97, 98, 99, 100, 101, 103}; }
 \end{lstlisting}
 \begin{lstlisting}[style=asm]
 // Undesirable:
-00000000 <.text.function>:
+0000 <.text.function>:
 /---/
 6:  4b07    ldr     r3, [pc, #28] ; (24 <function+0x24>) //1
 /---/
-24: 0000    .word   0x0000 //2 absolute address of
-.rodata, currently not linked
-0000 <.rodata>:    // absolute address will be replaced by linker
+24: 0000    .word   0x0000 //2 absolute address of .rodata, currently not linked
+0000 <.rodata>: // absolute address will be replaced by linker
 0:  0061    .word   0x0061 //3
 4:  0062    .word   0x0062
 8:  0063    .word   0x0063

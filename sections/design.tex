@@ -23,7 +23,7 @@ Software updating system, that would be more suitable for ESTCube-2 than any exi
 Proposed solution divides on-board software into two parts: firmware (startup script, \gls{hal}, \gls{os}, and critical device drivers) and application software (everything else) (figure \ref{fig:swOrg}). Firmware would be updatable by means of full image replacement, similar to how updates worked on ESTCube-1, including the use of multiple versions. This is proposed since firmware is expected to be updated rarely, if ever, and is too critical to use experimental updating methods with it. 
 
 % divided by function
-Application software, on the other hand, would be divided into parts, each containing single function. Each application function would be combined with a short header (table \ref{tab:header}) to a package. Each function could then be independently updated, added or removed.
+Application software, on the other hand, would be divided into parts, each containing single function. Each application function would be combined with a short header (table \ref{tab:header}) to form a package. Each function could then be independently updated, added or removed.
 
 \begin{figure}[h]
 	\centering
@@ -68,13 +68,13 @@ Application software, on the other hand, would be divided into parts, each conta
 \end{table}
 
 % snapshots
-Function version dependencies would be managed by a system of snapshots similar to git: after new functionality has been developed and tested, current version of all functions is recorded, \gls{mcs} will then determine, which of them differ when compared to satellites internal storage, and upload those.
+Function version dependencies would be managed by a system of snapshots similar to git: after new functionality has been developed and tested, current version of all functions is recorded. \Gls{mcs} will then determine, which of them differ when compared to satellites internal storage, and upload those.
 
 \subsubsection{On-board storage of application software}
 
-Main focus is on storing application functions in internal Flash, since it is the most restrictive storage, and also in case of safe mode, this is the sole non-volatile storage available. Storage of some functions in other memories, as well as moving functions between different memories and addresses, would also be possible.
+Main focus is on storing application functions in internal Flash, since it is the most restrictive storage. Additionally, in safe mode, this is the sole non-volatile storage available. Storage of some functions in other memories, as well as moving functions between different memories and addresses, would also be possible.
 
-While Flash memory does not support deleting or changing any data short of the entire sector, it can be used as appendable storage. Functions would therefore be written to flash sequentially as they arrive. Additionally, Flash allows the addition of zeros into data. This way functions could be marked as disabled by replacing some predefined area of function header with zeros (type in table \ref{tab:header}), without the need to delete the sector. In order to change a function, a new version would simply be appended to the storage. If several versions of a function are found in memory, the last one will be considered correct.
+While Flash memory does not support deleting or changing any data short of the entire sector, it can be used as appendable storage. Functions would therefore be written to flash sequentially as they arrive. Additionally, Flash allows the addition of zeros into data. This way functions could be marked as disabled by replacing some predefined area of function header with zeros ('Type' in table \ref{tab:header}), without the need to delete the sector. In order to change a function, a new version would simply be appended to the storage. If several versions of a function are found in memory, the last one will be considered correct.
 
 \subsubsection{Linking}
 
@@ -82,34 +82,34 @@ Compiled code contains many symbol references: function calls, global variables,
 
 Firmware would be compiled and linked to a fixed memory address first - meaning that absolute memory addresses of all functions and global variables in the firmware would be fixed. This way calls to all firmware functions from other firmware functions, as well as from any later added application function, can be simply linked on the ground.
 
-Calling application functions is more tricky, as they can move around in memory. They would be callable by using a system-global offset table. This table would contain the current memory address for each function. It is stored in volatile internal \gls{sram} and re-created every time the system boots (by walking over all stored functions and storing the address where each function appears last). It can be also changed during runtime, when new functions are added. Changing it on runtime when a function is changed, requires additional checks, to guarantee, that previous memory address does not remain in use (as some function pointer somewhere) and is therefore out of the scope of this work, but is potential future improvement.
+Calling application functions is more tricky, as they can move around in memory. They would be callable by using a system-global offset table. This table would contain the current memory address for each function. It is stored in volatile internal \gls{sram} and re-created every time the system boots (by walking over all stored functions and storing the address where each function appears last). The table itself would be located on fixed memory location and contain functions sorted by id. It can be also changed during runtime, when new functions are added. Changing it on runtime when a function is changed, requires additional checks, to guarantee, that previous memory address does not remain in use (as some function pointer somewhere) and is therefore out of the scope of this work, but is a potential future improvement.
 
 Additionally, firmware can't call functions, whose signatures are not known at the time of firmware compilation. For that reason, some functions are bundled with firmware (figure \ref{fig:swOrg}). They can be updated, but their signatures must remain unchanged.
 
-Function table can not be implemented as branch table, as flash and ram are too far away in the memory. Function table would therefore contain function pointers, 4 bytes per function. Storing 3 bytes per function would require 2 instructions additional overhead per function call, so it was decided that 4 bytes per function will be stored (Appendix \ref{apx:calls}). Pointers will be pointing to the first instruction of the function (after header).
-
-Function table should be periodically checked for errors. Function checksums should be checked during generation of the function table. During reboot flash memory can also be defragmented.
+Function table would be periodically checked for errors. Function checksums would be checked during generation of the function table. During reboot, flash memory can also be defragmented.
 
 \subsubsection{Compiling application functions}
 
 Compilers support function call indirection out of the box for \gls{pic} code, but since this proposal includes separating all functions, default tools fail to merge \glspl{got} properly. To avoid having to modify compiler itself, a way to rewrite all function calls using preprocessor was devised.
 
-Compiler will have header available, that contains preprocessor function-like macros for each application function that have matching names with functions (figure \ref{fig:macro}). They will contain instructions to read function address from function table, cast it to the function type, cast all arguments to required types, and call the function. The macro that corresponds to the function being compiled, will be removed using \texttt{\#undefine}. Such approach allows separation of functions be invisible to the developers.
+Compiler will have a header available that contains preprocessor function-like macros matching each application function (figure \ref{fig:macro}). They will contain instructions to read function address from function table, cast it to the function's type, cast all arguments to required types, and call the function.
 
 \begin{figure} [htb]
 \begin{lstlisting}[language=C]
-typedef void (*stuffDoer_t)();
-#define stuffDoer() (*((stuffDoer_t)(*((uint32_t *) (FunctionTable + 0)))))()
+typedef void (*f0_t)();
+#define f0() (*((f0_t)(*((uint32_t *) (0x20000000)))))()
 \end{lstlisting}
-\caption{Example call interception macro for hypothetical function called \texttt{stuffDoer()}, id 0.}
+\caption{Call interception macro for hypothetical function \texttt{f0()}.}
 \label{fig:macro}
 \end{figure}
+
+The macro that corresponds to the function being compiled will be removed using \texttt{\#undefine}. This way application code can be written identically regardless if updating system will be used or not.
 
 For calling important functions, the checksum of the function table can be checked immediately before jumping. Normally this is not done.
 
 \subsubsection{Global variables}
 
-In order to simplify the design, globals would be treated very similarly to functions. First, they would be compiled so that compiler would calculate length. Compilation should be \texttt{-fdata-sections}, then they can be extracted to separate packages, prepended with headers, and uploaded to the satellite.
+In order to simplify the design, globals would be treated very similarly to functions. First, they would be compiled, so that compiler would calculate their lengths. Compilation should be \texttt{-fdata-sections}, then they can be extracted to separate packages, prepended with headers, and uploaded to the satellite.
 
 Memory space after .data and before heap would be reserved for updatable globals. Linker would decide position for each variable in that area, and then all functions using the variable could be statically pre-linked on ground. Headers for globals would contain appropriate type, and additionally the memory address allocated for this variable. During boot, when function addresses are being added to offset table, global variables would be copied to respective addresses. As with function, latest occurrence overrides any previous ones.
 
