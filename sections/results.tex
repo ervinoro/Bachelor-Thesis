@@ -9,7 +9,7 @@ Set of python scripts was developed to aid with function compilation and packagi
 
 Function table format was decided. It could not be implemented as branch table, as internal Flash and \gls{sram} are too far away in the memory space. Function table was therefore set to contain pointers, 4 bytes per function. Storing 3 bytes per function would require 2 instructions additional overhead per function call, so it was decided that 4 bytes per function will be stored (Appendix \ref{apx:calls}). Pointers are to point to the first instruction of the function (right after header).
 
-A function was added to firmware, that runs right before main function. It starts walking package headers from the beginning of space allocated for such packages, jumping over function content based on length, and stops on first header with type nothing (\texttt{0xff}). Function pointers are added to function table, and global variables copied to their respective allocated memory areas.
+A function was added to firmware, that runs right before main function (Appendix \ref{apx:gentable}). It starts walking package headers from the beginning of space allocated for such packages, jumping over function content based on length, and stops on first header with type nothing (\texttt{0xff}). Function pointers are added to function table, and global variables copied to their respective allocated memory areas.
 
 \subsection{Function discovery and preparation}
 
