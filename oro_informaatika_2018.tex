@@ -4,18 +4,17 @@
 
 \newcommand{\topic}{\iflanguage{english}{\Title}{\Pealkiri}}
 
-
 %%% BEGIN DOCUMENT
 \begin{document}
 
 % Title page
 \input{titlepage.tex}
 
-% If the thesis is printed on both sides of the page then 
+% If the thesis is printed on both sides of the page then
 % the second page must be must be empty. Comment this out
 % if you print only to one side of the page comment this out
 %\newpage
-%\thispagestyle{empty}    
+%\thispagestyle{empty}
 %\phantom{Text to fill the page}
 % end of extra page without number
 
@@ -30,28 +29,25 @@
 \newpage
 \TODO{Remove list of todos}
 \listoftodos[Unsolved issues]
-% end of todo page 
+% end of todo page
 
 
 %%% Content
 \input{sections/introduction.tex}
 \input{sections/usecases.tex}
-\input{sections/stateoftheart.tex}
+\input{sections/relatedwork.tex}
 \input{sections/design.tex}
-\input{sections/results.tex}
+\input{sections/testing.tex}
 \input{sections/conclusion.tex}
 
 
 % BibTeX bibliography
 \newpage
-\nocite{*}
-\TODO{Remove nocite}
 %\bibliography{bachelor-thesis}
 \printbibliography
 \addcontentsline{toc}{section}{\refname}
 
-% All extras and licence:
+% All extras and license:
 \input{appendix.tex}
 
 \end{document}
-

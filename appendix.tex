@@ -54,6 +54,7 @@ g_pfnVectors:
 
 \newpage
 \section{Boot sequence}
+\todo{Add comments}
 \label{apx:gentable}
 \begin{lstlisting}[language=C]
 volatile uint32_t __attribute__((section(".FunctionTable"))) FunctionTable[255];
@@ -67,7 +68,7 @@ void gentable(uint32_t *start) {
 		uint8_t  *version    = (uint8_t  *)(bytestart +  7);
 		uint16_t *length     = (uint16_t *)(bytestart +  8);
 		uint16_t *vma_offset = (uint16_t *)(bytestart + 10);
-		
+
 		if (*type == 0b10101010) {
 			FunctionTable[*id] = (uint32_t)bytestart+12+1;
 			bytestart += 12 + *length;
@@ -114,7 +115,7 @@ supervised by \SupervisorName\ and \CosupervisorName.
 \item
 I am aware of the fact that the author retains these rights.
 \item
-I certify that granting the non-exclusive licence does not infringe the intellectual property rights or rights arising from the Personal Data Protection Act. 
+I certify that granting the non-exclusive licence does not infringe the intellectual property rights or rights arising from the Personal Data Protection Act.
 \end{enumerate}
 
 
@@ -152,7 +153,7 @@ reprodutseerimiseks säilitamise ja üldsusele kättesaadavaks tegemise eesmärg
 \item
 olen teadlik, et punktis 1 nimetatud õigused jäävad alles ka autorile.
 \item
-kinnitan, et lihtlitsentsi andmisega ei rikuta teiste isikute intellektuaalomandi ega isikuandmete kaitse seadusest tulenevaid õigusi. 
+kinnitan, et lihtlitsentsi andmisega ei rikuta teiste isikute intellektuaalomandi ega isikuandmete kaitse seadusest tulenevaid õigusi.
 \end{enumerate}
 
 

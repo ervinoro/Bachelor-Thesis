@@ -10,7 +10,7 @@ Software updating system, that would be more suitable for ESTCube-2 than any exi
 \begin{itemize}
 	\item allow addition of program code without the need to re-transmit significant portions of already existing code.
 	\item allow changing a subset of existing code without the need to re-transmit significant portions of unchanged code.
-	\item not require on-board modifications of uploaded code. This makes it possible to store code directly in internal Flash in case external memory modules are unavailable. 
+	\item not require on-board modifications of uploaded code. This makes it possible to store code directly in internal Flash in case external memory modules are unavailable.
 	\item not depend on \gls{os} features unavailable in standard distribution of FreeRTOS.
 	\item not significantly reduce code performance compared to system that uses full image replacement.
 	\item support full inter-component communication. This enables any unforeseen updates as well, which a predefined \gls{api} could limit.
@@ -20,7 +20,7 @@ Software updating system, that would be more suitable for ESTCube-2 than any exi
 \subsection{Proposed solution}
 
 % divided into firmware and functions
-Proposed solution divides on-board software into two parts: firmware (startup script, \gls{hal}, \gls{os}, and critical device drivers) and application software (everything else) (figure \ref{fig:swOrg}). Firmware would be updatable by means of full image replacement, similar to how updates worked on ESTCube-1, including the use of multiple versions. This is proposed since firmware is expected to be updated rarely, if ever, and is too critical to use experimental updating methods with it. 
+Proposed solution divides on-board software into two parts: firmware (startup script, \gls{hal}, \gls{os}, and critical device drivers) and application software (everything else) (figure \ref{fig:swOrg}). Firmware would be updatable by means of full image replacement, similar to how updates worked on ESTCube-1, including the use of multiple versions. This is proposed since firmware is expected to be updated rarely, if ever, and is too critical to use experimental updating methods with it.
 
 % divided by function
 Application software, on the other hand, would be divided into parts, each containing a single function. Each application function would be combined with a short header (table \ref{tab:header}) to form a package. Each function could then be independently updated, added or removed.
@@ -48,12 +48,12 @@ Application software, on the other hand, would be divided into parts, each conta
 				\texttt{0xff} & nothing \\
 				\texttt{0xaa} & function \\
 				\texttt{0x55} & global \\
-				\texttt{0x00} & disabled \\	
+				\texttt{0x00} & disabled \\
 			\end{tabular} \\
 			\hline
 			2 \glspl{b} & Function ID & uint16 \\
 			\hline
-			1 \gls{b} & Version nr & uint8 \\
+			1 \gls{b} & Version no & uint8 \\
 			\hline
 			2 \glspl{b} & Length of body & uint16 \\
 			\hline
@@ -74,7 +74,7 @@ Function version dependencies would be managed by a system of snapshots similar 
 
 Main focus is on storing application functions in internal Flash, since it is the most restrictive storage. Additionally, in safe mode, this is the sole non-volatile storage available (Section \ref{s:hardware}). Storage of some functions in other memories, as well as moving functions between different memories and addresses, would also be possible.
 
-While Flash memory does not support deleting or changing any data short of the entire sector, it can be used as appendable storage. Functions would therefore be written to flash sequentially as they arrive. Additionally, Flash allows the addition of zeros into data. This way functions could be marked as disabled by replacing some predefined area of function header with zeros ('Type' in table \ref{tab:header}), without the need to delete the sector. In order to change a function, a new version would simply be appended to the storage. If several versions of a function are found in memory, the last one will be considered correct.
+While Flash memory does not support deleting or changing any data short of the entire sector, new data can be appended. Functions would therefore be written to flash sequentially as they arrive. Additionally, Flash allows the addition of zeros into data. This way functions could be marked as disabled by replacing some predefined area of function header with zeros ('Type' in table \ref{tab:header}), without the need to delete the sector. In order to change a function, a new version would simply be appended to the storage. If several versions of a function are found in memory, the last one will be considered correct.
 
 \subsubsection{Linking}
 
@@ -82,7 +82,7 @@ Compiled code contains many symbol references: function calls, global variables,
 
 Firmware would be compiled and linked to a fixed memory address first - meaning that absolute memory addresses of all functions and global variables in the firmware would be fixed. This way calls to all firmware functions from other firmware functions, as well as from any later added application function, can be simply linked on the ground.
 
-Calling application functions is more tricky, as they can move around in memory. They would be callable by using a system-global offset table. This table would contain the current memory address for each function. It will be stored in volatile internal \gls{sram} and re-created every time the system boots (by walking over all stored functions and storing the address where each function appears last). The table itself would be located on fixed memory location and contain functions sorted by id. It can be also changed during runtime, when new functions are added. Changing it on runtime when a function is changed requires additional checks to guarantee that previous memory address does not remain in use (as some function pointer somewhere) and is therefore out of the scope of this work, but is a potential future improvement.
+Calling application functions is more tricky, as they can move around in memory. They would be callable by using a system-global offset table. This table would contain the current memory address for each function. It will be stored in volatile internal \gls{sram} and re-created every time the system boots (by walking over all stored functions and storing the address where each function appears last). The table itself would be located on fixed memory location and contain functions sorted by id. It can be also changed during the run time, when new functions are added. Changing it during the run time when a function is changed requires additional checks to guarantee that previous memory address does not remain in use (as some function pointer somewhere) and is therefore out of the scope of this work, but is a potential future improvement.
 
 Additionally, firmware can't call functions, whose signatures are not known at the time of firmware compilation, since compiler must generate code for passing arguments. For that reason, some functions \todo{for example ... initial functions} are bundled with firmware (figure \ref{fig:swOrg}). They can be updated, but their signatures must remain unchanged.
 
@@ -110,4 +110,3 @@ For calling important functions, the checksum of the function table can be check
 In order to simplify the design, globals would be treated very similarly to functions. First, they would be compiled, so that compiler would calculate their lengths. Compilation should include the flag \texttt{-fdata-sections}, this way they can be extracted to separate packages, prepended with headers, and uploaded to the satellite.
 
 Memory space after .data and before heap would be reserved for updatable globals. Linker would select an address for each variable in that area, and then all functions using the variable could be statically pre-linked on ground. Headers for globals would contain the appropriate type, and additionally the memory address allocated for this variable (table \ref{tab:header}). During boot, when function addresses are being added to the offset table, global variables would be copied to their respective addresses. As with a function, the latest occurrence of a global variable overrides any previous ones.
-
