@@ -41,9 +41,9 @@ Application software, on the other hand, would be divided into parts, each conta
 		\begin{tabular}{r|l|l}
 			\bf{Length} & \bf{Field} & \bf{Format} \\
 			\hline
-			4 \glspl{b} & \Gls{crc} & \\
+			4~B & \Gls{crc} & \\
 			\hline
-			1 \gls{b} & Type &
+			1~B & Type &
 			\begin{tabular}{r|l}
 				\texttt{0xff} & nothing \\
 				\texttt{0xaa} & function \\
@@ -51,17 +51,17 @@ Application software, on the other hand, would be divided into parts, each conta
 				\texttt{0x00} & disabled \\
 			\end{tabular} \\
 			\hline
-			2 \glspl{b} & Function ID & uint16 \\
+			2~B & Function ID & uint16 \\
 			\hline
-			1 \gls{b} & Version no & uint8 \\
+			1~B & Version no & uint8 \\
 			\hline
-			2 \glspl{b} & Length of body & uint16 \\
+			2~B & Length of body & uint16 \\
 			\hline
-			2 \glspl{b} & \Gls{sram} offset (global variables only) & uint16 \\
+			2~B & \Gls{sram} offset (global variables only) & uint16 \\
 		\end{tabular}
 		\begin{tablenotes}
 			\small
-			\item Header will have \texttt{nop}-s appended to it to pad it to $12$~\glspl{b} in length. \\Some instructions will generate a fault or will execute slower if addresses are not word-aligned \cite[Section~3.3.5]{STMicroelectronics2017}, therefore a multiple of $4$~\glspl{b} was chosen for the header length.
+			\item Header will have \texttt{nop}-s appended to it to pad it to $12$~B in length. \\Some instructions will generate a fault or will execute slower if addresses are not word-aligned \cite[Section~3.3.5]{STMicroelectronics2017}, therefore a multiple of $4$~B was chosen for the header length.
 		\end{tablenotes}
 		\label{tab:header}
 	\end{threeparttable}
@@ -107,6 +107,6 @@ For calling important functions, the checksum of the function table can be check
 
 \subsubsection{Global variables}
 
-In order to simplify the design, globals would be treated very similarly to functions. First, they would be compiled, so that compiler would calculate their lengths. Compilation should include the flag \texttt{-fdata-sections}, this way they can be extracted to separate packages, prepended with headers, and uploaded to the satellite.
+In order to simplify the design, global variables would be treated very similarly to functions. First, they would be compiled, so that compiler would calculate their lengths. Compilation should include the flag \texttt{-fdata-sections}, this way they can be extracted to separate packages, prepended with headers, and uploaded to the satellite.
 
-Memory space after .data and before heap would be reserved for updatable globals. Linker would select an address for each variable in that area, and then all functions using the variable could be statically pre-linked on ground. Headers for globals would contain the appropriate type, and additionally the memory address allocated for this variable (table \ref{tab:header}). During boot, when function addresses are being added to the offset table, global variables would be copied to their respective addresses. As with a function, the latest occurrence of a global variable overrides any previous ones.
+Memory space after .data and before heap would be reserved for updatable global variables. Linker would select an address for each variable in that area, and then all functions using the variable could be statically pre-linked on ground. Headers for global variables would contain the appropriate type, and additionally the memory address allocated for this variable (table \ref{tab:header}). During boot, when function addresses are being added to the offset table, global variables would be copied to their respective addresses. As with a function, the latest occurrence of a global variable overrides any previous ones.

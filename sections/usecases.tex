@@ -9,7 +9,7 @@ ESTCube-1 \gls{cdhs} received 20 distinct firmware updates during its mission, w
 
 Size of the changes in corresponding source codes was analyzed. On average, $2.09\% (s=3.52\%)$ of the code lines were added, removed or edited during a firmware update. The largest update changed $14.71\%$ of the code, while the smallest update only modified $0.02\%$ of all the lines. Updates with largest code changes were so due to addition of large portions of new code. Overall, size of the source code also gradually increased through the mission (from $63'390$ lines of code to $78'868$, a $24.42\%$ increase). However, no update consisted of just new code being added, always some previously existing code was changed or removed as well.
 
-As it was on ESTCube-1 (a classic nonsegmented firmware), a minor code modification could result in binary difference of almost $99\%$, which caused the need to upload entire firmware image again every time. Size of a typical \gls{cdhs} firmware image after compilation was $250$ \glspl{kib}. Those images had a Shannon entropy of about $0.6$ (on the scale of $0-1$), resulting in theoretical maximum compression ratio of $40\%$. \cite{Suenter2016}
+As it was on ESTCube-1 (a classic nonsegmented firmware), a minor code modification could result in binary difference of almost $99\%$, which caused the need to upload entire firmware image again every time. Size of a typical \gls{cdhs} firmware image after compilation was $250$~KiB. Those images had a Shannon entropy of about $0.6$ (on the scale of $0-1$), resulting in theoretical maximum compression ratio of $40\%$. \cite{Suenter2016}
 
 \subsection{Use cases during ESTCube-2 mission}
 
@@ -17,10 +17,10 @@ This thesis focuses on updating \gls{obc} software that has been written in C.\t
 
 \subsubsection{Hardware, on which the software will be updated}\label{s:hardware}
 
-ESTCube-2 \gls{obc} will be centered around an STM32F767IIT6 \gls{mcu}, which has $2$ \glspl{mb} of internal Flash and $516$ \glspl{kb} of internal \gls{sram}. For algorithm variables the \gls{obc} has $2$ \glspl{mb} of \gls{mram}. For external configuration tables, error logs, on-board statistics, and other data without strict latency restrictions, it has $3\cdot512$ \glspl{kb} of \gls{fram}. Mass storage for firmware versions, measurements, and payload data is provided by $2\cdot64$ \glspl{mb} of external Flash.
+ESTCube-2 \gls{obc} will be centered around an STM32F767IIT6 \gls{mcu}, which has $2$~MB of internal Flash and $516$~kB of internal \gls{sram}. For algorithm variables the \gls{obc} has $2$~MB of \gls{mram}. For external configuration tables, error logs, on-board statistics, and other data without strict latency restrictions, it has $3\cdot512$~kB of \gls{fram}. Mass storage for firmware versions, measurements, and payload data is provided by $2\cdot64$~MB of external Flash.
 \cite{Haljaste2017}
 
-At least critical software components must be stored in the internal flash, so that it would be possible to disable all external device drivers in safe mode. This is desirable since having more code enabled increases the probability of any faults occurring. However, flash memory consists of sectors, which can be up to 256 \glspl{kb} in size \cite{STMicroelectronics2018}. In order to edit any data already written to the memory, entire sector must be erased and rewritten \cite{STMicroelectronics2018}.
+At least critical software components must be stored in the internal flash, so that it would be possible to disable all external device drivers in safe mode. This is desirable since having more code enabled increases the probability of any faults occurring. However, flash memory consists of sectors, which can be up to 256~kB in size \cite{STMicroelectronics2018}. In order to edit any data already written to the memory, entire sector must be erased and rewritten \cite{STMicroelectronics2018}.
 
 \subsubsection{Types of updates}
 
