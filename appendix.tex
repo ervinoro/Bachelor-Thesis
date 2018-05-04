@@ -85,6 +85,46 @@ void gentable(uint32_t *start) {
 \end{lstlisting}
 
 \newpage
+\section{A short library function}
+\label{apx:cos}
+
+Disassembly of a very short (28 bytes total) function from the in-progress \gls{aocs} library that was analyzed. Adding 12~B header to this function results in $30\%$ storage overhead. However, this function would be inlined, replaced with a preprocessor macro, or replaced with longer implementation in later versions of this \gls{aocs} library.
+
+\rule{\textwidth}{0.4pt}
+\begin{lstlisting}[style=asm,frame=none]
+00000000 <ec_cos>:
+\end{lstlisting}
+\begin{lstlisting}[language=C,frame=none]
+float (ec_cos)( float radIn ) {
+\end{lstlisting}
+\begin{lstlisting}[style=asm,frame=none]
+   0:	b500      	push {lr}
+   2:	b083      	sub  sp, #12
+   4:	9001      	str  r0, [sp, #4]
+   6:	9801      	ldr  r0, [sp, #4]
+   8:	4b03      	ldr  r3, [pc, #12]	; (18 <ec_cos+0x18>)
+   a:	4798      	blx  r3
+   c:	4603      	mov  r3, r0
+   e:	4618      	mov  r0, r3
+  10:	b003      	add  sp, #12
+  12:	f85d fb04 	ldr.w  pc, [sp], #4
+\end{lstlisting}
+\begin{lstlisting}[language=C,frame=none]
+	if (!MATH_USE_LUT || !MATH_HAS_TABLE())
+		return cosf( radIn );
+\end{lstlisting}
+\begin{lstlisting}[style=asm,frame=none]
+  16:	bf00      	nop
+  18:	00000000 	.word	0x00000000
+\end{lstlisting}
+\begin{lstlisting}[language=C,frame=none]
+  // relocation 18: R_ARM_ABS32	cosf
+}
+\end{lstlisting}
+\rule{\textwidth}{0.4pt}
+
+
+\newpage
 %=== Licence in English
 \newcommand\EngLicence{{%
 \selectlanguage{english}

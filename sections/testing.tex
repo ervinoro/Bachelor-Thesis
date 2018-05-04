@@ -35,9 +35,28 @@ Secondly, issues arouse with the way GNU C compiler handles local constants. \Gl
 
 \subsection{Performance}
 
-Updatable functions were compared to functions without such capability. Performance overhead per function call was determined to be 3 instructions. Storage overhead per function was 12~B.
+Performance overhead per function call with the implemented system is $3$ instructions. Storage overhead per function is $12$~B.
 
-\TODO{Average size and time of functions.}
+An in-progress \gls{aocs} library was packaged, and results analyzed. The average size of compiled functions was $533~\text{B}\ (s=1201~\text{B})$ (figure \ref{fig:kalman}). Largest function was just over $8.5$~kB. However, the library also contained several extremely small functions (for example appendix \ref{apx:cos} just $28$~B) which would not stay as separate functions in later versions.
+
+Overall storage overhead for the specific version tested was $2.25\%$. For aforementioned reasons the actual overhead would probably be lower.
+
+\begin{figure} [htb]
+\begin{tikzpicture}
+\begin{axis}[
+    ymin=0, ymax=20,
+    minor y tick num = 3,
+    area style,
+    width=\textwidth,
+    height=0.4\textwidth
+    ]
+
+\addplot+[ybar interval,mark=no] plot coordinates { (0, 1) (50, 13) (100, 17) (150, 9) (200, 4) (250, 4) (300, 5) (350, 4) (400, 1) (450, 2) (500, 2) (550, 0) (600, 1) (650, 6) (700, 1) (750, 2) (800, 2) (850, 2) (900, 1) (950, 0) (1850, 1) (1900, 0) (2650, 1) (2700, 0) (6550, 1) (6600, 0) (8500, 1) (8550, 0) };
+\end{axis}
+\end{tikzpicture}
+\caption{Histogram of sizes of compiled functions from a in-progress \gls{aocs} library.}
+\label{fig:kalman}
+\end{figure}
 
 \TODO{You could compare an artificial partial firmware update. Full firmware update vs. your method - how much data is sent to the spacecraft and how long it would take to write it in Flash. Flash writing speed can be calculated from the MCU datasheet.}
 

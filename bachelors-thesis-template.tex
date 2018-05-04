@@ -14,12 +14,12 @@
 
 \documentclass[12pt]{article}
 
-% A package for setting layout and margins for your thesis 
+% A package for setting layout and margins for your thesis
 \usepackage[a4paper,marginparsep=10pt,marginparwidth=80pt]{geometry}
 %TODO: margin has been modified
 
 %%=== A4 page setup ===
-%\setlength{\paperwidth}{21.0cm} 
+%\setlength{\paperwidth}{21.0cm}
 %\setlength{\paperheight}{29.7cm}
 %\setlength{\textwidth}{16cm}
 %\setlength{\textheight}{25cm}
@@ -33,13 +33,13 @@
 
 % When you write in Estonian then you want to use text with right character set
 % By default LaTeX does not know what to do with õäöu letters. You have to specify
-% a correct input and font encoding. For that you have to Google the Web     
+% a correct input and font encoding. For that you have to Google the Web
 %
-% For TexShop under MacOS X. The right lines are 
+% For TexShop under MacOS X. The right lines are
 %\usepackage[applemac]{inputenc}
 %\usepackage[T1]{fontenc} %Absolutely critical for *hyphenation* of words with non-ASCII letters.
 %
-% For Windows and Linux the right magic lines are   
+% For Windows and Linux the right magic lines are
 % \usepackage[latin1]{inputenc}
 % \usepackage[latin5]{inputenc}
 %%\usepackage[utf8]{inputenc} %Package inputenc Error: Unicode char ´ (U+B4) not set up for use with LaTeX
@@ -55,16 +55,16 @@
 \usepackage[parfill]{parskip} %no indents, empty lines instead
 
 
-% Use package babel for English or Estonian 
-% If you use Estonian make sure that Estonian hyphenation is installed 
+% Use package babel for English or Estonian
+% If you use Estonian make sure that Estonian hyphenation is installed
 % - hypen-estonian or eehyp packages
 %
 %===Choose the main language in thesis
-\usepackage[estonian, english]{babel} %the thesis is in English 
+\usepackage[estonian, english]{babel} %the thesis is in English
 %\usepackage[english, estonian]{babel} %the thesis is in Estonian
 
 
-% Change Babel document elements 
+% Change Babel document elements
 \addto\captionsestonian{%
   \renewcommand{\refname}{Viidatud kirjandus}%
   \renewcommand{\appendixname}{Lisad}%
@@ -144,19 +144,19 @@
 	{\nolinkurl{doi:#1}}}
 
 
-% General packages for math in general, theorems and symbols 
+% General packages for math in general, theorems and symbols
 % Read ftp://ftp.ams.org/ams/doc/amsmath/short-math-guide.pdf for further information
-\usepackage{amsmath} 
+\usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amssymb}
 
-% Optional calligraphic fonts    
+% Optional calligraphic fonts
 \usepackage[mathscr]{eucal}
 
 % Print a dot instead of colon in table or figure captions
 \usepackage[labelsep=period]{caption}
 
-% Packages for building tables and tabulars 
+% Packages for building tables and tabulars
 \usepackage{array}
 \usepackage{tabu}   % Wide lines in tables
 \usepackage{xspace} % Non-eatable spaces in macros
@@ -191,15 +191,12 @@
 
 % Packages for defining colourful text together with some colours
 \usepackage{color}
-\usepackage{xcolor} 
-%\definecolor{dkgreen}{rgb}{0,0.6,0}
-%\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
+\usepackage{xcolor}
 
 
 % Standard package for drawing algorithms
 % Since the thesis in article format we must define \chapter for
-% the package algorithm2e (otherwise obscure errors occur) 
+% the package algorithm2e (otherwise obscure errors occur)
 \let\chapter\section
 \usepackage[ruled, vlined, linesnumbered]{algorithm2e}
 
@@ -221,14 +218,14 @@
 
 % Proper way to create coloured code listings
 \usepackage{listings}
-\lstset{ 
+\lstset{
   %language=python,                % the language of the code
   language=C,
   basicstyle=\footnotesize,        % the size of the fonts that are used for the code
   %numbers=left,                   % where to put the line-numbers
   %numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
-  numberstyle=\tiny\color{gray}, 
-  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line 
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line
                                    % will be numbered
   numbersep=5pt,                   % how far the line-numbers are from the code
   backgroundcolor=\color{white},   % choose the background color. You must add \usepackage{color}
@@ -237,7 +234,7 @@
   showtabs=false,                  % show tabs within strings adding particular underscores
   frame = lines,
   %frame=single,                   % adds a frame around the code
-  rulecolor=\color{black},		   % if not set, the frame-color may be changed on line-breaks within 
+  rulecolor=\color{black},		   % if not set, the frame-color may be changed on line-breaks within
                                    % not-black text (e.g. commens (green here))
   tabsize=2,                       % sets default tabsize to 2 spaces
   captionpos=b,                    % sets the caption-position to bottom
@@ -246,8 +243,9 @@
   %title=\lstname,                 % show the filename of files included with \lstinputlisting;
                                    % also try caption instead of title
   keywordstyle=\color{blue},       % keyword style
-  commentstyle=\color{dkgreen},    % comment style
-  stringstyle=\color{mauve},       % string literal style
+  identifierstyle=\color{black},
+  commentstyle=\color{green!50!black},    % comment style
+  stringstyle=\color{orange},       % string literal style
   escapeinside={\%*}{*)},          % if you want to add a comment within your code
   morekeywords={*,game, fun}       % if you want to add more keywords to the set
 }
@@ -255,7 +253,10 @@
 \lstdefinestyle{asm}{
 	language=[ARM]Assembler,
 	basicstyle=\footnotesize\ttfamily,
-	commentstyle=\itshape\color{purple!40!black},
+  keywordstyle=\color{violet},       % keyword style
+  identifierstyle=\color{black},
+	commentstyle=\itshape\color{green!50!black},
+  morekeywords={ldr.w,lsr},
 }
 
 
@@ -264,25 +265,24 @@
 % http://logicmatters.net/resources/ndexamples/proofsty3.html <= writing type rules => use semantic::inference
 % ftp://tug.ctan.org/tex-archive/macros/latex/contrib/semantic/semantic.pdf
 % \usepackage{proof}
-% \usepackage{semantic} 
+% \usepackage{semantic}
 % \setlength{\inferLineSkip}{4pt}
 % \def\predicatebegin #1\predicateend{$\Gamma \vdash #1$}
 
 % If you really want to draw figures in LaTeX use packages tikz or pstricks
-% However, getting a corresponding illustrations is really painful  
+% However, getting a corresponding illustrations is really painful
+\usepackage{pgfplots}
 
-
-% Define your favorite macros that you use inside the thesis 
+% Define your favorite macros that you use inside the thesis
 % Name followed by non-removable space
 \newcommand{\proveit}{ProveIt\xspace}
 
 % Macros that make sure that the math mode is set
 \newcommand{\typeF}[1] {\ensuremath{\mathsf{type_{#1}}}\xspace}
-\newcommand{\opDiv}{\ensuremath{\backslash \mathsf{div}}\xspace} 
+\newcommand{\opDiv}{\ensuremath{\backslash \mathsf{div}}\xspace}
 
 % Nice Todo box
 \newcommand{\TODO}{\todo[inline]}
 
 % A way to define theorems and lemmata
 \newtheorem{theorem}{Theorem}
-
