@@ -37,9 +37,9 @@ Secondly, issues arouse with the way GNU C compiler handles local constants. \Gl
 
 Performance overhead with the implemented system is three additional instructions per function call (Appendix \ref{apx:calls}). Storage overhead per function is $12$~B (table \ref{tab:header}).
 
-An in-progress \gls{aocs} library was packaged, and results analyzed. The average size of a compiled function was $533~\text{B}\ (s=1201~\text{B})$ (figure \ref{fig:kalman}). Largest function was just over $8.5$~kB. On the other hand, the library also contained several extremely small functions. For example, one function (shown in appendix \ref{apx:cos}) was just 28~B after compilation, therefore the 12~B header caused a $30\%$ storage overhead. However, this function would be inlined, replaced with a preprocessor macro, or replaced with longer implementation in later versions of this \gls{aocs} library.
+An in-development \gls{aocs} library was packaged, and results analyzed. The average size of a compiled function was $533~\text{B}\ (s=1201~\text{B})$ (figure \ref{fig:kalman}). Largest function was just over $8.5$~kB. On the other hand, the library also contained several extremely small functions. For example, one function (shown in appendix \ref{apx:cos}) was just 28~B after compilation, therefore the 12~B header caused a $30\%$ storage overhead. However, this function could be inlined, replaced with a preprocessor macro, or replaced with longer implementation in later versions of this \gls{aocs} library.
 
-Overall storage overhead for the specific version tested was $2.25\%$. Since very small functions would be eliminated at later stages of development, the actual storage overhead can be assumed to be even lower.
+Overall storage overhead for the specific version tested was $2.25\%$. Since very small functions could be eliminated at later stages of development, the actual storage overhead can be assumed to be even lower.
 
 \begin{figure} [htb]
 \begin{tikzpicture}
@@ -82,7 +82,7 @@ Overall storage overhead for the specific version tested was $2.25\%$. Since ver
 
 
 \end{tikzpicture}
-\caption{Compiled size and respective storage overhead for functions from an in-progress \gls{aocs} library.}
+\caption{Compiled size and respective storage overhead for functions from an in-development \gls{aocs} library.}
 \label{fig:kalman}
 \end{figure}
 
