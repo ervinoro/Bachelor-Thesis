@@ -272,6 +272,50 @@
 % If you really want to draw figures in LaTeX use packages tikz or pstricks
 % However, getting a corresponding illustrations is really painful
 \usepackage{pgfplots}
+\pgfplotsset{
+    every first x axis line/.style={},
+    every first y axis line/.style={},
+    every first z axis line/.style={},
+    every second x axis line/.style={},
+    every second y axis line/.style={},
+    every second z axis line/.style={},
+    first x axis line style/.style={/pgfplots/every first x axis line/.append style={#1}},
+    first y axis line style/.style={/pgfplots/every first y axis line/.append style={#1}},
+    first z axis line style/.style={/pgfplots/every first z axis line/.append style={#1}},
+    second x axis line style/.style={/pgfplots/every second x axis line/.append style={#1}},
+    second y axis line style/.style={/pgfplots/every second y axis line/.append style={#1}},
+    second z axis line style/.style={/pgfplots/every second z axis line/.append style={#1}}
+}
+
+\makeatletter
+\def\pgfplots@drawaxis@outerlines@separate@onorientedsurf#1#2{%
+    \if2\csname pgfplots@#1axislinesnum\endcsname
+        % centered axis lines handled elsewhere.
+    \else
+    \scope[/pgfplots/every outer #1 axis line,
+        #1discont,decoration={pre length=\csname #1disstart\endcsname, post length=\csname #1disend\endcsname}]
+        \pgfplots@ifaxisline@B@onorientedsurf@should@be@drawn{0}{%
+            \draw [/pgfplots/every first #1 axis line] decorate {
+                \pgfextra
+                % exchange roles of A <-> B axes:
+                \pgfplotspointonorientedsurfaceabsetupfor{#2}{#1}{\pgfplotspointonorientedsurfaceN}%
+                \pgfplots@drawgridlines@onorientedsurf@fromto{\csname pgfplots@#2min\endcsname}%
+                \endpgfextra
+                };
+        }{}%
+        \pgfplots@ifaxisline@B@onorientedsurf@should@be@drawn{1}{%
+            \draw [/pgfplots/every second #1 axis line] decorate {
+                \pgfextra
+                % exchange roles of A <-> B axes:
+                \pgfplotspointonorientedsurfaceabsetupfor{#2}{#1}{\pgfplotspointonorientedsurfaceN}%
+                \pgfplots@drawgridlines@onorientedsurf@fromto{\csname pgfplots@#2max\endcsname}%
+                \endpgfextra
+                };
+        }{}%
+    \endscope
+    \fi
+}%
+\makeatother
 
 % Define your favorite macros that you use inside the thesis
 % Name followed by non-removable space
