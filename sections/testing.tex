@@ -39,7 +39,7 @@ Performance overhead with the implemented system is three additional instruction
 
 An in-development \gls{aocs} library was packaged, and results analyzed. The average size of a compiled function was $533~\text{B}\ (s=1201~\text{B})$ (figure \ref{fig:kalman}). Largest function was just over $8.5$~kB. On the other hand, the library also contained several extremely small functions. For example, one function (shown in appendix \ref{apx:cos}) was just 28~B after compilation, therefore the 12~B header caused a $30\%$ storage overhead. However, this function could be inlined, replaced with a preprocessor macro, or replaced with longer implementation in later versions of this \gls{aocs} library.
 
-Overall storage overhead for the specific version tested was $2.25\%$. Since very small functions could be eliminated at later stages of development, the actual storage overhead can be assumed to be even lower.
+Overall storage overhead caused to the tested version by function headers was $2.25\%$. Since very small functions could be eliminated at later stages of development, the actual storage overhead can be assumed to be even lower.
 
 \begin{figure} [htb]
 \begin{tikzpicture}
@@ -85,8 +85,6 @@ Overall storage overhead for the specific version tested was $2.25\%$. Since ver
 \caption{Compiled size and respective storage overhead for functions from an in-development \gls{aocs} library.}
 \label{fig:kalman}
 \end{figure}
-
-\TODO{You could compare an artificial partial firmware update. Full firmware update vs. your method - how much data is sent to the spacecraft and how long it would take to write it in Flash. Flash writing speed can be calculated from the MCU datasheet.}
 
 \subsection{Section .rodata}\label{s:rodata}
 

@@ -4,15 +4,9 @@
 |---|---  
 | Juhendaja:     | Indrek Sünter, MSc  
 | Kaasjuhendaja: | Helle Hein, PhD  
-| Mrksnad:       | \TODO{Nimekiri, võtmesõnadest}  
+| Mrksnad:       | ESTCube-2, Delta uuendused, Tarkvara uuendamine orbiidil, Manussüsteemi tarkvarauuendused  
 | Teaduseriala:  | P175 Informaatika, süsteemiteooria  
 
 
 ## Abstrakt
-\TODO{Translate any changes from abstract}
-ESTCube-2 missiooni jooksul plaanitakse laadida satelliidi pardale uut tarkvara, et lisada funktsionaalsust, testida ja võrrelda uudseid tarkvaralahendusi või lahendada potentsiaalseid tarkvara või raudvara probleeme. See on aga mitte-triviaalne probleem, kuna ESTCube-2 satelliidil on üleslaadimiseks ainult aeglane (ülelennu ajal 9600 kuni 38400 bps) sidekanal ja pardal tagasihoidlik arvutusvõimsus \cite{Ehrpais2016}, tarkvara hoitakse ja jooksutatakse välkmälust \cite{Haljaste2017}, ning oma eksperimentaalse loomuse tõttu vajab satelliit uuendusi sageli.
-Välja töötatud ja kasutatud on erinevaid lahendusi manussüsteemide pardatarkvara uuendamiseks, kuid neil esinevad erinevad puudujäägid.
-
-Käesoleva töö raames töötati välja ja realiseeriti uudne meetod ESTCube-2 satelliidi pardale uue või uuendatud tarkvara laadimiseks. Selle järgi kompileeritakse ükshaaval ja ainult uued või uuenenud funktsioonid, laetakse need üles ja salvestatakse muutumatult välkmälu esimesse vabasse piirkonda, ning seotakse seejärel ülejäänud tarkvaraga. Sedasi vähendab see meetod üles laadimist vajavat andmemahtu, võimaldab jooksutada tarkvara ohverdamata kiiruse arvelt ning eemaldab vajaduse välkmälu kustutamiseks, võimaldades uusi funktsioone lisada ka ilma manussüsteemi taaskäivitamata.
-Töö raames analüüsiti väljatöötatud lahenduse jõudlust, kohaldatavust, piiranguid ning turvalisust.
-
+ESTCube-2 missiooni jooksul plaanitakse laadida satelliidi pardale uut tarkvara, et lisada funktsionaalsust, testida ja võrrelda uudseid tarkvaralahendusi ning lahendada potentsiaalseid tarkvara või raudvara probleeme. Peamisteks keerukust lisavate faktoriteks on aeglane üleslaadimiskiirus, tagasihoidlik arvutusvõimsus pardal, tarkvara jooksutamine välkmälust, sage uuendamisvajadus eksperimentaalse loomuse tõttu. Varasemalt on välja töötatud ja kasutatud erinevaid lahendusi manussüsteemide pardatarkvara uuendamiseks, kuid kõigil neil esinevad omad puudujäägid. Käesoleva töö raames töötati välja ja realiseeriti uudne meetod ESTCube-2 satelliidi pardatarkvara uuendamiseks. Selle järgi kompileeritakse ja laetakse üles ükshaaval ja ainult uued või uuenenud funktsioonid, ning salvestatakse üles laetud binaarid muudatusteta välkmälu esimesse vabasse piirkonda. Sedasi vähendab see meetod üleslaadimist vajavat andmemahtu (ESTCube-1 puhul muutis uuendus keskmiselt vaid $2\%$ koodist) ning eemaldab vajaduse välkmälu kustutamiseks, võimaldades uusi funktsioone lisada ka ilma manussüsteemi taaskäivitamata. Tehtud tööd saab kasutada lisaks ESTCube-2 satelliidile ka teiste sarnaste süsteemide juures tarkvarauuenduste meetodi valimisel. Vähendades piiranguid uuendamisele on võimalik suurendada kosmosesüsteemi tarkvaralist paindlikkust. Selle väärtus on mõõdetav ja saab olla suurem alternatiivsetest (näiteks raudvaralistest) variantidest.

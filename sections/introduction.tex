@@ -1,20 +1,13 @@
 \newpage
 \section{Introduction}
 
-\TODO{Write introduction}
-\TODO{Mention, that the partial software updating system is being developed for the OBC, even though it could theoretically be used on other systems as well.}
-% What is it in simple terms (title)?
-% Why should anyone care?
-% What was my contribution?
-% Full system image replacement, like what was used on ESTCube-1 \cite{Tarbe2013,Suenter2016}, consumes large amounts of bandwidth and is, therefore, not viable very frequently. Virtual machine or script interpretator based systems have also been implemented for satellites like on TTÜ100 \cite{Aasavaeli2017} and ESTCube-1 \cite{Ehrpais2016}, but these lack the performance of native code and are, therefore, not usable for performance critical functionality. Approaches based on binary differences, like the one that was used on Mars exploration rovers \cite{Greco2005}, combine low bandwidth requirements with native performance, but require rewriting of entire firmware image, which is problematic, since ESTCube-2 on-board computer stores firmware on flash memory with large erase blocks and limited number of write cycles \cite{Haljaste2017}. To overcome these shortcomings, different systems, like StrandMind \cite{Bridges2013}, SenSpire OS \cite{Dong2009}, and Contiki \cite{Dunkels2006}, have implemented different schemes for dynamically loading modules, but the operating system for ESTCube-2 on board computer, FreeRTOS, does not support dynamically loaded software components out of the box \cite{Barry2005}. \todo{this list is not exchaustive}
+Main goal of this thesis is to design and implement a method of updating software more suitable for ESTCube-2 than existing alternatives. Proposed solution focuses on enabling delta updates (avoiding upload of unchanged code as much as possible) and reducing the amount of on-board processing required. Additionally, updatable software's performance nor abilities should not be limited either.
 
-%Perhaps a list of thesis objectives here - what is presented in this thesis. The list that the defence committee would keep track of as a checklist, to see if the thesis actually fulfils all of the promised objectives.
+During the ESTCube-2 mission, loading of new software onto the satellite is planned, in order to introduce new features, test and compare novel software solutions, and resolve potential software or hardware issues. The value of increased software flexibility is measurable and can be higher than, for example, that of hardware flexibility \cite{Nilchiani2009}. For updating software on ESTCube-2, main difficulties are slow uplink (9600 bps), limited on-board processing power \cite{Ehrpais2016}, execution of software from Flash memory \cite{Haljaste2017} (limitations of which are detailed in section \ref{s:hardware}), and frequent updates due to the missions experimental nature.
 
-%Then could describe the organisation - which objective corresponds to which section, etc.
+Creating a new method for updating on-board software was set as the goal since all existing solutions have some limitations. The topic is relevant right now, since ESTCube-2 is currently in development phase. Even though this thesis focuses on the use cases of ESTCube-2, the topic has wider importance - several existing solutions have been designed with Internet of Things or wireless sensor networks \cite{Dunkels2006,Han2005} in mind. Those systems have several common aspects with nanosatellites. The method proposed in this paper has not been previously described in literature.
 
-The rest of this paper is organized as follows.
-\TODO{What you are doing in each section (a sentence or two per section)}
-
+Scope of this work is limited to on-board software written in C, GNU toolchain, and standard FreeRTOS distribution.
 
 \subsection{ESTCube-2}
 
@@ -23,3 +16,12 @@ ESTCube-2 is an experimental three-unit CubeSat. Its main missions are testing t
 ESTCube-2 is developed mostly by the students of University of Tartu and students that join the ESTCube program from all over the world \cite{Ehrpais2016}. Also among the main objectives for ESTCube-2 is to educate a new generation of space engineers, and to promote space technologies in general \cite{Iakubivskyi2016}.
 
 The \gls{obc} of the satellite is tasked with running \gls{aocs} algorithms, controlling payload experiments and star tracker, and handling telemetry and telecommands. The most important requirements for \gls{aocs} are set by plasma brake and Earth observation payloads. The former needs sufficient enough angular momentum for the centrifugal deployment of the tether, and the latter requires accurate pointing. While some methods, like the use of magnetic torquers, build upon the heritage of the successful ESTCube-1 mission, others, like reaction wheels by Hyperion Technologies and in-house developed star tracker, are completely new for the team. Due to the large amount of experimental software, it is planned that it should be possible to perform firmware updates on all of the \glspl{mcu} after the launch of the satellite. This enables the team to correct any unexpected problems that the satellite may encounter. \cite{Ehrpais2016}
+
+
+\subsection{Outcomes}
+
+Main problem in this thesis is how to add new or updated functions incrementally without the need for on-board modifications. Taking into account the scope of this thesis, main subject of research is how GNU C compiler generates machine code, and what are the options to alter the process to suit specific needs.
+
+The method proposed in this paper considers a function to be atomic unit. Functions would be compiled separately and only new or updated functions would be uploaded. Received functions would be stored sequentially in Flash memory without modifications. This way the need for uplink bandwidth is reduced while preserving software's native performance and abilities. The need to delete Flash memory is eliminated, making it possible to add new functions even without rebooting the embedded system. Performance, applicability and limitations of proposed solution are analyzed.
+
+The rest of this paper is organized as follows. Section 2 lists use cases based on ESTCube-1 experience and planned ESTCube-2 hardware. Section 3 describes identified four categories of previous approaches to the problem of embedded software updates. Strengths and weaknesses of them are listed. Section 4 describes the solution proposed in this paper along with detailed requirements. Section 5 includes results of testing the solution. Appendix A lists all used abbreviations. Appendix B has an experiment that explains, why function table was implemented with four bytes per function. Appendix C includes the bootloading procedure needed to make proposed solution work.
