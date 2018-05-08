@@ -1,5 +1,6 @@
 \newpage
 \section{Use cases}
+\label{s:usecases}
 
 Use cases for ESTCube-2 \gls{obc} software updating system are derived from ESTCube-1 experience as to what might be needed later on. Differences between the two missions are taken into account where applicable.
 
@@ -12,8 +13,6 @@ Size of the changes in corresponding source codes was analyzed. On average, $2.0
 As it was on ESTCube-1 (a classic nonsegmented firmware), a minor code modification could result in binary difference of almost $99\%$, which caused the need to upload entire firmware image again every time. Size of a typical \gls{cdhs} firmware image after compilation was $250$~KiB. Those images had a Shannon entropy of about $0.6$ (on the scale of $0-1$), resulting in theoretical maximum compression ratio of $40\%$. \cite{Suenter2016}
 
 \subsection{Use cases during ESTCube-2 mission}
-
-This thesis focuses on updating \gls{obc} software that has been written in C.\todo{combine with introduction}
 
 \subsubsection{Hardware, on which the software will be updated}\label{s:hardware}
 
