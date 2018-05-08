@@ -9,13 +9,12 @@ As shown, no existing solution fully covers described use cases, and this mandat
 Software updating system, that would be more suitable for ESTCube-2 than any existing alternatives, must:
 
 \begin{itemize}
-	\item allow addition of program code without the need to re-transmit significant portions of already existing code.
-	\item allow changing a subset of existing code without the need to re-transmit significant portions of unchanged code.
+	\item allow addition of program code without the need to re-transmit significant portions of already existing code, so that it could be used for complex commands as well.
+	\item allow changing a subset of existing code without the need to re-transmit significant portions of unchanged code, so that upload bandwith and update application time would be minimised.
 	\item not require on-board modifications of uploaded code. This makes it possible to store code directly in internal Flash in case external memory modules are unavailable.
-	\item not depend on \gls{os} features unavailable in standard distribution of FreeRTOS.
+	\item not depend on \gls{os} features that are unavailable in a standard distribution of Free\-RTOS, since this is the \gls{os} planned for ESTCube-2 \gls{obc}.
 	\item not significantly reduce code performance compared to system that uses full image replacement.
 	\item support full inter-component communication. This enables any unforeseen updates as well, which a predefined \gls{api} could limit.
-	\item \TODO{other requirements}
 \end{itemize}
 
 \subsection{Proposed solution}
@@ -90,7 +89,7 @@ Firmware would be compiled and linked to a fixed memory address first - meaning 
 
 Calling application functions is more tricky, as they can move around in memory. They would be callable by using a system-global offset table (figure \ref{fig:swLink}). This table would contain the current memory address for each function. It will be stored in volatile internal \gls{sram} and re-created every time the system boots (by walking over all stored functions and storing the address where each function appears last). The table itself would be located on fixed memory location and contain functions sorted by id. It can be also changed during the run time, when new functions are added. Changing it during the run time when a function is changed requires additional checks to guarantee that previous memory address does not remain in use (as some function pointer somewhere) and is therefore out of the scope of this work, but is a potential future improvement.
 
-Additionally, firmware can't call functions, whose signatures are not known at the time of firmware compilation, since compiler must generate code for passing arguments. For that reason, some functions \todo{for example ... initial functions} are bundled with firmware (figure \ref{fig:swOrg}). They can be updated, but their signatures must remain unchanged.
+Additionally, firmware can't call functions, whose signatures are not known at the time of firmware compilation, since compiler must generate code for passing arguments. For that reason, some functions are bundled with firmware (figure \ref{fig:swOrg}). Examples would include functions dealing with scheduling, \gls{icp} and software updating itself. They can be updated, but their signatures must remain unchanged.
 
 Function table would be periodically checked for errors. Function checksums would be checked during generation of the function table. During reboot, flash memory can also be defragmented.
 

@@ -16,8 +16,6 @@ Firmware contains a table generation function (Appendix \ref{apx:gentable}) that
 
 Aforementioned Python scripts were tested against simple test functions, as well as \gls{aocs} repositories. For discovering global variables, two methods were compared: parsing source code variable definitions, and compiling source with \texttt{-fdata-sections} to discover global variable names from symbol table. Former method was not sufficiently effective due to large amount of different global variables, including matrices and other complex types. Using the latter method, most functions and all global variables were successfully packaged.
 
-As one limitation, the proposed solution does not allow the packaging of functions with a variable number of arguments, for example, \texttt{sprintf}. It remains unsolved, how to typedef a function pointer to function with variable number of arguments.\todo{look at it one more time}
-
 \subsection{Running application functions}
 
 \subsubsection{Fully self-contained function}
