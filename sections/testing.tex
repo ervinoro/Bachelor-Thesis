@@ -91,7 +91,7 @@ Overall storage overhead caused to the tested version by function headers was $2
 
 ESTCube is using GNU Tools for Arm Embedded Processors (version 7.2.1 at the time of writing) to compile \gls{obc} software. When the GNU C compiler finds local constants that are longer than a byte, it separates them from the code, and creates a \texttt{.rodata} section for them. The \texttt{.text} section will then contain relative reference (\texttt{//1}) to an absolute address (\texttt{//2}) inside the \texttt{.text}, which in turn points to the data (\texttt{//3}) inside \texttt{.rodata} (figure \ref{fig:rodata}). This structure remains even when linker is told to put \texttt{.text.function} and corresponding \texttt{.rodata} into single output section.
 
-\begin{figure} [htb]
+\begin{figure} [h]
 \begin{lstlisting}[language=C]
 int function() { int a[] = {97, 98, 99, 100, 101, 103}; }
 \end{lstlisting}

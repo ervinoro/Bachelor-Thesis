@@ -26,11 +26,9 @@ Proposed solution divides on-board software into two parts: firmware (startup sc
 % divided by function
 Application software, on the other hand, would be divided into parts, each containing a single function. Each application function would be combined with a short header (table \ref{tab:header}) to form a package. Each function could then be independently updated, added or removed.
 
-\begin{figure}[h]
+\begin{figure}[t]
 	\centering
-	\tiny
-	\def\svgwidth{\columnwidth}
-	\input{figures/On-board_software_organisation.pdf_tex}
+	\includegraphics[width=0.9\textwidth]{figures/On-board_software_organisation.pdf}
 	\caption{Proposed on-board software organization.}
 	\label{fig:swOrg}
 \end{figure}
@@ -81,9 +79,16 @@ While Flash memory does not support deleting or changing any data short of the e
 
 Compiled code contains many symbol references: function calls, global variables, etc. For software to run, all of them must be replaced with absolute memory addresses. In order to satisfy all requirements (especially about no modifications to uploaded code), combination of static pre-linking and custom dynamic linker would be used.
 
-Firmware would be compiled and linked to a fixed memory address first - meaning that absolute memory addresses of all functions and global variables in the firmware would be fixed. This way calls to all firmware functions from other firmware functions, as well as from any later added application function, can be simply linked on the ground.
+Firmware would be compiled and linked to a fixed memory address first - meaning that absolute memory addresses of all functions and global variables in the firmware would be fixed. This way calls to all firmware functions from other firmware functions, as well as from any later added application function, can be simply linked on the ground (figure \ref{fig:swLink}).
 
-Calling application functions is more tricky, as they can move around in memory. They would be callable by using a system-global offset table. This table would contain the current memory address for each function. It will be stored in volatile internal \gls{sram} and re-created every time the system boots (by walking over all stored functions and storing the address where each function appears last). The table itself would be located on fixed memory location and contain functions sorted by id. It can be also changed during the run time, when new functions are added. Changing it during the run time when a function is changed requires additional checks to guarantee that previous memory address does not remain in use (as some function pointer somewhere) and is therefore out of the scope of this work, but is a potential future improvement.
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=\textwidth]{figures/Software_linking.pdf}
+	\caption{References in on-board software.}
+	\label{fig:swLink}
+\end{figure}
+
+Calling application functions is more tricky, as they can move around in memory. They would be callable by using a system-global offset table (figure \ref{fig:swLink}). This table would contain the current memory address for each function. It will be stored in volatile internal \gls{sram} and re-created every time the system boots (by walking over all stored functions and storing the address where each function appears last). The table itself would be located on fixed memory location and contain functions sorted by id. It can be also changed during the run time, when new functions are added. Changing it during the run time when a function is changed requires additional checks to guarantee that previous memory address does not remain in use (as some function pointer somewhere) and is therefore out of the scope of this work, but is a potential future improvement.
 
 Additionally, firmware can't call functions, whose signatures are not known at the time of firmware compilation, since compiler must generate code for passing arguments. For that reason, some functions \todo{for example ... initial functions} are bundled with firmware (figure \ref{fig:swOrg}). They can be updated, but their signatures must remain unchanged.
 
@@ -110,4 +115,4 @@ For calling important functions, the checksum of the function table can be check
 
 In order to simplify the design, global variables would be treated very similarly to functions. First, they would be compiled, so that compiler would calculate their lengths. Compilation should include the flag \texttt{-fdata-sections}, this way they can be extracted to separate packages, prepended with headers, and uploaded to the satellite.
 
-Memory space after .data and before heap would be reserved for updatable global variables. Linker would select an address for each variable in that area, and then all functions using the variable could be statically pre-linked on ground. Headers for global variables would contain the appropriate type, and additionally the memory address allocated for this variable (table \ref{tab:header}). During boot, when function addresses are being added to the offset table, global variables would be copied to their respective addresses. As with a function, the latest occurrence of a global variable overrides any previous ones.
+Memory space after .data and before heap would be reserved for updatable global variables  (figure \ref{fig:swLink}). Linker would select an address for each variable in that area, and then all functions using the variable could be statically pre-linked on ground. Headers for global variables would contain the appropriate type, and additionally the memory address allocated for this variable (table \ref{tab:header}). During boot, when function addresses are being added to the offset table, global variables would be copied to their respective addresses. As with a function, the latest occurrence of a global variable overrides any previous ones.
