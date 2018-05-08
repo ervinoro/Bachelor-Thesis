@@ -55,14 +55,14 @@ g_pfnVectors:
 
 \newpage
 \section{Boot sequence}
-\todo{Add comments}
 \label{apx:gentable}
 \begin{lstlisting}[language=C]
-volatile uint32_t __attribute__((section(".FunctionTable"))) FunctionTable[255];
+volatile uint32_t __attribute__((section(".FunctionTable"))) FunctionTable[255]; // Table of function pointers
 
 void gentable(uint32_t *start) {
 	uint8_t *bytestart = (uint8_t *)start;
 	while (1) {
+		// Read package header:
 		uint32_t *crc        = (uint32_t *)(bytestart     );
 		uint8_t  *type       = (uint8_t  *)(bytestart +  4);
 		uint16_t *id         = (uint16_t *)(bytestart +  5);
@@ -70,15 +70,15 @@ void gentable(uint32_t *start) {
 		uint16_t *length     = (uint16_t *)(bytestart +  8);
 		uint16_t *vma_offset = (uint16_t *)(bytestart + 10);
 
-		if (*type == 0b10101010) {
+		if (*type == 0b10101010) { // function
 			FunctionTable[*id] = (uint32_t)bytestart+12+1;
-			bytestart += 12 + *length;
-		} else if (*type == 0b01010101) {
+			bytestart += 12 + *length; // header length is 12
+		} else if (*type == 0b01010101) { // global variable
 			memcpy((void*)(0x20000000 + *vma_offset), bytestart, *length);
 			bytestart += 12 + *length;
-		} else if (*type == 0b11111111) {
-			break;
-		} else if (*type == 0b00000000) {
+		} else if (*type == 0b11111111) { // unused Flash
+			break; // reached end of last package
+		} else if (*type == 0b00000000) { // disabled package
 			bytestart += 12 + *length;
 		}
 	}
