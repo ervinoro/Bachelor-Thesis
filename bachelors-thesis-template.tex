@@ -71,7 +71,7 @@
 }
 
 \usepackage{csquotes}
-\usepackage[style=apa, apamaxprtauth=7, citestyle=authoryear-icomp, apabackref=true, url=false, backend=biber]{biblatex}
+\usepackage[style=apa, apamaxprtauth=5, citestyle=authoryear-icomp, apabackref=true, url=false, backend=biber]{biblatex}
 \addbibresource{bachelor-thesis.bib}
 
 % Use parens by default and set entire name as hyperlink
@@ -178,7 +178,7 @@
 
 \usepackage{url}
 
-\usepackage[acronym,toc,numberedsection,automake]{glossaries}
+\usepackage[acronym,toc,numberedsection=autolabel,automake]{glossaries}
 \glsenableentrycount
 \renewcommand\gls\cgls
 \renewcommand\glspl\cglspl
@@ -210,7 +210,7 @@
 
 
 % Nice todo notes
-\usepackage[prependcaption,disable]{todonotes}
+\usepackage[prependcaption]{todonotes}
 
 % comments and verbatim text (code)
 \usepackage{verbatim}

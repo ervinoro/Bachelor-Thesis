@@ -6,11 +6,11 @@ A build methodology was used to explore the feasibility of proposed system. Afte
 
 \subsection{Implementation details}
 
-A set of Python scripts aids with function compilation and packaging. Functions are discovered by searching function definitions from all source files. Global variables are extracted from symbol tables after all sources have been compiled. They are handled differently because function arguments and their types can not be obtained from symbol tables, but since all information about global variables is available there, it is preferable to let compiler do the source parsing. A side effect of implementing function discovery with regular expressions is the inclusion of function definitions from within block comments. This, however, should not cause any issues, since they will not have corresponding binary section and therefore the will not be included in any snapshots. Data about functions and global variables, along with respective object files, gets stored in a SQLite3 database. Scripts also exist for generating interception macros, linker script, and packages with headers.
+A set of Python scripts aids with function compilation and packaging. Functions are discovered by searching function definitions from all source files. Global variables are extracted from symbol tables after all sources have been compiled. They are handled differently because function arguments and their types can not be obtained from symbol tables, but since all information about global variables is available there, it is preferable to let compiler do the source parsing. A side effect of implementing function discovery with regular expressions is the inclusion of function definitions from within block comments. This, however, should not cause any issues, since they will not have corresponding binary section and therefore they will not be included in any snapshots. Data about functions and global variables, along with respective object files, gets stored in a SQLite3 database. Scripts also exist for generating interception macros, linker script, and packages with headers.
 
-Function table can not be implemented as branch table, as internal Flash and \gls{sram} are too far away in the memory space. Function table will therefore contain pointers, 4 bytes per function. Storing 3 bytes per function would require 2 instructions of additional overhead per function call, so it has been decided that 4 bytes per function will be stored (Appendix \ref{apx:calls}). Pointers will point to the first instruction of the function (right after the header).
+Function table can not be implemented as branch table, as internal Flash and \gls{sram} are too far away in the memory space. Function table will therefore contain pointers, 4 bytes per function. Storing 3 bytes per function would require 2 instructions of additional overhead per function call, so it has been decided that 4 bytes per function will be stored (Appendix~\ref{apx:calls}). Pointers will point to the first instruction of the function (right after the header).
 
-Firmware contains a table generation function (Appendix \ref{apx:gentable}) that must run before any application software gets called. It starts walking package headers from the beginning of space allocated for such packages, jumping over function bodies based on length, and stops on the first header with the type 'nothing' (\texttt{0xff}, table \ref{tab:header}). Function pointers are added to the function table, and global variables get copied to their respective allocated memory areas.
+Firmware contains a table generation function (Appendix~\ref{apx:gentable}) that must run before any application software gets called. It starts walking package headers from the beginning of space allocated for such packages, jumping over function bodies based on length, and stops on the first header with the type 'nothing' (\texttt{0xff}, Table~\ref{tab:header}). Function pointers are added to the function table, and global variables get copied to their respective allocated memory areas.
 
 \subsection{Function discovery and preparation}
 
@@ -20,25 +20,25 @@ Aforementioned Python scripts were tested against simple test functions, as well
 
 \subsubsection{Fully self-contained function}
 
-As the first test, a fully self contained function was written, meaning one that did not depend on any external variables or functions, including any standard library or operating system methods. This function blinked a \gls{led} by writing appropriate values directly to the \gls{mcu} registers.
+As the first test, a fully self contained function was written, meaning one that did not depend on any external variables or functions, including any standard library or operating system methods. This function blinked a light by writing appropriate values directly to the \gls{mcu} registers.
 
 It was compiled independently of the rest of the firmware and tested without any issues. A minor inconvenience was noted: debug symbols for applications functions are not available to the debugger from the firmware's \gls{elf}.
 
 \subsubsection{Calling firmware functions}
 
-Next, a function was written that blinks \glspl{led} by calling respective \gls{hal} methods. Several issues arouse, all of which were possible to mitigate, so that this test was also mostly successfully concluded.
+Next, a function was written that blinks lights by calling respective \gls{hal} methods. All issues that arouse were mitigated, so that this test was also mostly successfully concluded. Following difficulties were experienced:
 
-Firstly, author was unable to find any way to tell GNU linker \texttt{ld} to use symbol addresses from a map file generated by prior linking. Even though \textcite{Dunkels2006} claims to have used just the map file for pre-linking, documentation, different online sources nor a online forum (\url{https://stackoverflow.com/q/48028126/7088748}) had revealed any information on the matter by the time of writing. This resulted in the need to link firmware separately once, and then again with each application function, hoping that firmware layout stays unchanged. Initially that was not the case, but after explicitly specifying section order in linker script, layout consistency was achieved.
+Firstly, author was unable to find any way to tell GNU linker \texttt{ld} to use symbol addresses from a map file generated by prior linking. Even though \textcite{Dunkels2006} claim to have used just the map file for pre-linking, documentation, different online sources nor a online forum (\url{https://stackoverflow.com/q/48028126/7088748}) had revealed any information on the matter by the time of writing. This resulted in the need to link firmware separately once, and then again with each application function, hoping that firmware layout stays unchanged. Initially that was not the case, but after explicitly specifying section order in linker script, layout consistency was achieved.
 
-Secondly, issues arouse with the way GNU C compiler handles local constants. \Gls{hal} functions for accessing \gls{gpio} take a struct of port and pin as an argument. Unfortunately, compiler placed the structs to \texttt{.rodata} section separately from the function code, even though they were local. Even when placing function's \texttt{.text} and respective \texttt{.rodata} containing only function's local constants side by side with linker, compiler has already generated code that expects to use absolute memory addresses. More about that issue can be found in section \ref{s:rodata}. For the purpose of this test, the issue was mitigated by storing all pins and ports to single-byte local variables, that the compiler then decided to store directly within the code section.
+Secondly, issues arouse with the way GNU C compiler handles local constants. \Gls{hal} functions for accessing \gls{gpio} take a struct of port and pin as an argument. Unfortunately, compiler placed the structs to \texttt{.rodata} section separately from the function code, even though they were local. Even when placing function's \texttt{.text} and respective \texttt{.rodata} containing only function's local constants side by side with linker, compiler has already generated code that expects to use absolute memory addresses. More about that issue can be found in Section~\ref{s:rodata}. For the purpose of this test, the issue was mitigated by storing all pins and ports to single-byte local variables, that the compiler then decided to store directly within the code section.
 
 \subsection{Performance}
 
-Performance overhead with the implemented system is three additional instructions per function call (Appendix \ref{apx:calls}). Storage overhead per function is $12$~B (table \ref{tab:header}).
+Performance overhead with the implemented system is three additional instructions per function call (Appendix~\ref{apx:calls}). Storage overhead per function is 12 bytes (Table~\ref{tab:header}).
 
-An in-development \gls{aocs} library was packaged, and results analyzed. The average size of a compiled function was $533~\text{B}\ (s=1201~\text{B})$ (figure \ref{fig:kalman}). Largest function was just over $8.5$~kB. On the other hand, the library also contained several extremely small functions. For example, one function (shown in appendix \ref{apx:cos}) was just 28~B after compilation, therefore the 12~B header caused a $30\%$ storage overhead. However, this function could be inlined, replaced with a preprocessor macro, or replaced with longer implementation in later versions of this \gls{aocs} library.
+An in-development \gls{aocs} library was packaged, and results analyzed. The average size of a compiled function was 533 bytes (s=1201 bytes) (Figure~\ref{fig:kalman}). Largest function was just over 8.5 kilobytes. On the other hand, the library also contained several extremely small functions. For example, one function (shown in Appendix~\ref{apx:cos}) was just 28 bytes after compilation, therefore the 12 byte header caused a 30\% storage overhead. However, this function could be inlined, replaced with a preprocessor macro, or replaced with longer implementation in later versions of this \gls{aocs} library.
 
-Overall storage overhead caused to the tested version by function headers was $2.25\%$. Since very small functions could be eliminated at later stages of development, the actual storage overhead can be assumed to be even lower.
+Overall storage overhead caused to the tested version by function headers was 2.25\%. Since very small functions could be eliminated at later stages of development, the actual storage overhead can be assumed to be even lower.
 
 \begin{figure} [htb]
 \begin{tikzpicture}
@@ -50,7 +50,7 @@ Overall storage overhead caused to the tested version by function headers was $2
     area style,
     width=0.96\textwidth,
     height=0.4\textwidth,
-    xlabel = {size of binary (B)},
+    xlabel = {size of binary (bytes)},
     ylabel = {count},
     first y axis line style=blue,
     ylabel shift = -6 pt
@@ -69,7 +69,7 @@ Overall storage overhead caused to the tested version by function headers was $2
     height=0.4\textwidth,
     hide x axis,
     axis y line=right,
-    ylabel = {storage overhead ($\%$)},
+    ylabel = {storage overhead (\%)},
     second y axis line style={red},
     ylabel style={yshift = 8 pt}
     ]
@@ -87,7 +87,7 @@ Overall storage overhead caused to the tested version by function headers was $2
 
 \subsection{Section .rodata}\label{s:rodata}
 
-ESTCube is using GNU Tools for Arm Embedded Processors (version 7.2.1 at the time of writing) to compile \gls{obc} software. When the GNU C compiler finds local constants that are longer than a byte, it separates them from the code, and creates a \texttt{.rodata} section for them. The \texttt{.text} section will then contain relative reference (\texttt{//1}) to an absolute address (\texttt{//2}) inside the \texttt{.text}, which in turn points to the data (\texttt{//3}) inside \texttt{.rodata} (figure \ref{fig:rodata}). This structure remains even when linker is told to put \texttt{.text.function} and corresponding \texttt{.rodata} into single output section.
+ESTCube is using GNU Tools for Arm Embedded Processors (version 7.2.1 at the time of writing) to compile \gls{obc} software. When the GNU C compiler finds local constants that are longer than a byte, it separates them from the code and creates a \texttt{.rodata} section for them. The \texttt{.text} section will then contain relative reference (\texttt{//1}) to an absolute address (\texttt{//2}) inside the \texttt{.text}, which in turn points to the data (\texttt{//3}) inside \texttt{.rodata} (Figure~\ref{fig:rodata}). This structure remains even when linker is told to put \texttt{.text.function} and corresponding \texttt{.rodata} into single output section.
 
 \begin{figure} [h]
 \begin{lstlisting}[language=C]
