@@ -63,7 +63,7 @@ Application software, on the other hand, would be divided into parts, each conta
 The headers (Table~\ref{tab:header}) will have \texttt{nop}-s appended to them to pad them to 12 bytes in length. Some instructions will generate a fault or will execute slower if addresses are not word-aligned \cite[Section~3.3.5]{STMicroelectronics2017}, therefore a multiple of 4 bytes was chosen for the header length.
 
 % snapshots
-Function version dependencies would be managed by a system of snapshots similar to git \cite[Chapter~1.3]{Chacon2018}: after new functionality has been developed and tested, current version of all functions is recorded. \Gls{mcs} will then determine, which of them differ when compared to satellites internal storage, and upload those.
+Function version dependencies would be managed by a system of snapshots similar to git \cite[Chapter~1.3]{Chacon2018}: after new functionality has been developed and tested, current version of all functions is recorded. \Gls{mcs} will then determine, which of them differ when compared to satellite's internal storage, and upload those.
 
 \subsubsection{On-board storage of application software}
 
