@@ -14,7 +14,7 @@
 .thumb
 
 function: // Function to be called
-bx lr // Immideately return
+bx lr // Immediately return
 
 jump32: // How would function call overhead look like in case of 32 bits of RAM per function pointer
 ldr r0, [r1]
@@ -49,27 +49,36 @@ g_pfnVectors:
 \begin{lstlisting}[language=C]
 volatile uint32_t __attribute__((section(".FunctionTable"))) FunctionTable[255]; // Table of function pointers
 
-void gentable(uint32_t *start) {
-	uint8_t *bytestart = (uint8_t *)start;
-	while (1) {
-		// Read package header:
-		uint32_t *crc        = (uint32_t *)(bytestart     );
-		uint8_t  *type       = (uint8_t  *)(bytestart +  4);
-		uint16_t *id         = (uint16_t *)(bytestart +  5);
-		uint8_t  *version    = (uint8_t  *)(bytestart +  7);
-		uint16_t *length     = (uint16_t *)(bytestart +  8);
-		uint16_t *vma_offset = (uint16_t *)(bytestart + 10);
+typedef enum {
+	PACKAGE_DISABLED = 0x00,
+	PACKAGE_GLOBAL = 0x55,
+	PACKAGE_FUNCTION = 0xaa,
+	PACKAGE_NOTHING = 0xff
+} package_type_t;
 
-		if (*type == 0b10101010) { // function
-			FunctionTable[*id] = (uint32_t)bytestart+12+1;
-			bytestart += 12 + *length; // header length is 12
-		} else if (*type == 0b01010101) { // global variable
-			memcpy((void*)(0x20000000 + *vma_offset), bytestart, *length);
-			bytestart += 12 + *length;
-		} else if (*type == 0b11111111) { // unused Flash
-			break; // reached end of last package
-		} else if (*type == 0b00000000) { // disabled package
-			bytestart += 12 + *length;
+typedef struct __attribute__((__packed__)) {
+	uint32_t       crc;
+	package_type_t type;
+	uint16_t       id;
+	uint8_t        version;
+	uint16_t       len;
+	uint16_t       vma_offset;
+} package_header_t;
+
+extern uint32_t _ram; // linker symbol
+
+void gentable(package_header_t *header, uint8_t *end) {
+	while ((uint8_t*)header < end) { // safeguard
+		if (header->type == PACKAGE_FUNCTION) {
+			FunctionTable[header->id] = (uint32_t)header + sizeof(package_header_t) + 1; // ARM Thumb jumps need odd addresses
+			header += sizeof(package_header_t) + header->len;
+		} else if (header->type == PACKAGE_GLOBAL) {
+			memcpy(&_ram + header->vma_offset, header + sizeof(package_header_t), header->len);
+			header += sizeof(package_header_t) + header->len;
+		} else if (header->type == PACKAGE_NOTHING) {
+			break; // reached the end of last package
+		} else if (header->type == PACKAGE_DISABLED) {
+			header += sizeof(package_header_t) + header->len;
 		}
 	}
 }
@@ -79,7 +88,7 @@ void gentable(uint32_t *start) {
 \section{A short library function}
 \label{apx:cos}
 
-Disassembly of a very short (28 bytes total) function from the in-progress \gls{aocs} library that was analyzed.
+Disassembly of a very short (28 bytes total) function from the in-development \gls{aocs} library that was analyzed.
 
 \rule{\textwidth}{0.4pt}
 \begin{lstlisting}[style=asm,frame=none]
