@@ -1,4 +1,4 @@
-# Delta updates for ESTCube-2 onboard computer software
+# Delta Updates for ESTCube-2 Onboard Computer Software
 
 | Author:       | Ervin Oro  
 |---|---  

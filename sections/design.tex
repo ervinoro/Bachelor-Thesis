@@ -6,36 +6,36 @@ As shown, no existing solution fully covers the described use cases, and this ma
 
 \subsection{Requirements}
 
-Software updating system, that would be more suitable for ESTCube-2 than any existing alternatives, must:
+Software updating system that would be more suitable for ESTCube-2 than any existing alternatives, must:
 
-\begin{itemize}
+\begin{enumerate}
 	\item allow addition of program code without the need to re-transmit significant portions of already existing code, so that it could be used for small one-time subroutines as well.
 	\item allow changing a subset of existing code without the need to re-transmit significant portions of unchanged code, so that upload bandwidth and update application time would be minimized.
 	\item not require on-board modifications of uploaded code. This makes it possible to store code directly in internal flash in the case that external memory modules are unavailable.
-	\item make it possible to rearrange functions on board. This allows to defragment internal flash from time to time.
+	\item make it possible to rearrange functions on board. This enables defragmenting the internal flash.
 	\item not depend on \gls{os} features that are unavailable in a standard distribution of Free\-RTOS, since this is the \gls{os} planned for ESTCube-2 \gls{obc}.
 	\item not significantly reduce code performance compared to a system that uses full image replacement.
 	\item support full inter-component communication. This enables any unforeseen updates as well, which a predefined \gls{api} could limit.
-\end{itemize}
+\end{enumerate}
 
 \subsection{Proposed solution}
 
 % divided into firmware and functions
 The proposed solution divides on-board software into two parts: firmware (startup script, \gls{hal}, \gls{os}, and critical device drivers) and application software (everything else) (Figure~\ref{fig:swOrg}). Firmware would be updatable by means of full image replacement, similar to how updates worked on ESTCube-1, including the use of multiple versions. This is proposed since firmware is expected to be updated rarely, if ever, and is too critical to use experimental updating methods with it.
 
-% divided by function
-Application software, on the other hand, would be divided into parts, each containing a single function. Each application function would be combined with a short header (Table~\ref{tab:header}) to form a package. Each function could then be independently updated, added or removed.
-
-\begin{figure}[t]
+\begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figures/On-board_software_organization.pdf}
 	\caption{Proposed on-board software organization. Blue denotes application software.}
 	\label{fig:swOrg}
 \end{figure}
 
+% divided by function
+Application software, on the other hand, would be divided into parts, each containing a single function. Each application function would be combined with a short header (Table~\ref{tab:header}) to form a package. Each function could then be independently updated, added or removed.
+
 \begin{table}[h]
 	\centering
-	\caption{Application functions header.}
+	\caption{Application function's header.}
 	\begin{tabular}{r|l|l}
 		\bf{Length (bytes)} & \bf{Field} & \bf{Format} \\
 		\hline
@@ -78,24 +78,24 @@ Compiled code contains many symbol references: function calls, global variables,
 
 Firmware would be compiled and linked to a fixed memory address first - meaning that absolute memory addresses of all functions and global variables in the firmware would be fixed. This way calls to all firmware functions from other firmware functions, as well as from any later added application functions, can be simply linked on the ground (Figure~\ref{fig:swLink}).
 
-\begin{figure}[t]
+\begin{figure}[ht]
 	\centering
-	\includegraphics[width=\textwidth]{figures/Software_linking.pdf}
+	\includegraphics[width=0.96\textwidth]{figures/Software_linking.pdf}
 	\caption{References in on-board software. Blue denotes application software.}
 	\label{fig:swLink}
 \end{figure}
 
 Calling application functions is more tricky, as they can move around in memory. They would be callable by using a system-global offset table (Figure~\ref{fig:swLink}). This table would contain the current memory address for each function. It will be stored in volatile internal \gls{sram} and re-created every time the system boots (by walking over all stored functions and storing the address where each function appears last). The table itself would be located on fixed memory location and contain functions sorted by id. It can be also changed during the run-time, when new functions are added. Changing it during the run-time when a function is changed requires additional checks to guarantee that previous memory address does not remain in use (as some function pointer somewhere) and is therefore out of the scope of this work, but is a potential future improvement.
 
-Additionally, firmware can't call functions, whose signatures are not known at the time of firmware compilation, since compiler must generate code for passing arguments. For that reason, some functions are bundled with the firmware (Figure~\ref{fig:swOrg}). Examples would include functions dealing with scheduling, \gls{icp} and software updating itself. They can be updated, but their signatures must remain unchanged.
+Additionally, firmware can't call functions, whose signatures are not known at the time of firmware compilation, since compiler must generate code for passing arguments. For that reason, some functions are bundled with the firmware (Figure~\ref{fig:swOrg}). Examples would include functions dealing with the \gls{icp} and software updating itself. They can be updated, but their signatures must remain unchanged.
 
 The table of function offsets would be periodically checked for errors. Functions' checksums could also be checked during the generation of this table. During reboot, flash memory can also be defragmented.
 
 \subsubsection{Compiling application functions}
 
-Compilers support generating indirect function calls out of the box for \gls{pic}. However, the commonly-used \gls{svr4} scheme expects the \gls{got} to be at a fixed offset from the code, not at a fixed memory address \cite[Chapter~8]{Levine1999}. This has the effect that each independent portion of code needs its own copy of the \gls{got}, but having one for each function would cause unacceptable size overhead. To avoid having to modify the compiler itself, a way to rewrite all function calls using the preprocessor will be used.
+Compilers support generating indirect function calls out of the box for \gls{pic}. However, the commonly-used \gls{svr4} scheme expects the \gls{got} to be at a fixed offset from the code \cite[Chapter~8]{Levine1999}. This has the effect that each independent portion of code needs its own copy of the \gls{got}, but having one for each function would cause unacceptable size overhead. To avoid having to modify the compiler itself, a way to rewrite all function calls using the preprocessor will be used.
 
-For each function that would otherwise result in an unresolved external symbol, a preprocessor function-like macro (Figure~\ref{fig:macro}) will be generated. It contains instructions to read function's address from the function table, cast it to the function's type, cast all arguments to required types, and call the function. Since the macro call syntax will be identical to that of a function call, application code can be agnostic to the updating platform.
+For each function that would otherwise result in an unresolved external symbol, a preprocessor macro (Figure~\ref{fig:macro}) will be generated. It contains instructions to read function's address from the function table, cast it to the function's type, cast all arguments to required types, and call the function. Since the macro call syntax will be identical to that of a function call, application code can be agnostic to the updating platform.
 
 \begin{figure} [htb]
 \begin{lstlisting}[language=C]
@@ -106,7 +106,7 @@ typedef void (*f0_t)();
 \label{fig:macro}
 \end{figure}
 
-For calling important functions, the checksum of the function table can be checked immediately before jumping by incorporating modified interception macro. Normally this is not done.
+For calling important functions, the checksum of the function can be checked immediately before jumping by incorporating modified interception macro. Normally this is not done.
 
 \subsubsection{Global variables}
 
