@@ -6,13 +6,13 @@ As shown, no existing solution fully covers the described use cases, and this ma
 
 \subsection{Requirements}
 
-Software updating system, that would be more suitable for ESTCube-2 than any existing alternatives, must:
+Software updating system that would be more suitable for ESTCube-2 than any existing alternatives, must:
 
 \begin{itemize}
 	\item allow addition of program code without the need to re-transmit significant portions of already existing code, so that it could be used for small one-time subroutines as well.
 	\item allow changing a subset of existing code without the need to re-transmit significant portions of unchanged code, so that upload bandwidth and update application time would be minimized.
 	\item not require on-board modifications of uploaded code. This makes it possible to store code directly in internal flash in the case that external memory modules are unavailable.
-	\item make it possible to rearrange functions on board. This allows to defragment internal flash from time to time.
+	\item make it possible to rearrange functions on board. This enables defragmenting the internal flash.
 	\item not depend on \gls{os} features that are unavailable in a standard distribution of Free\-RTOS, since this is the \gls{os} planned for ESTCube-2 \gls{obc}.
 	\item not significantly reduce code performance compared to a system that uses full image replacement.
 	\item support full inter-component communication. This enables any unforeseen updates as well, which a predefined \gls{api} could limit.
@@ -35,7 +35,7 @@ Application software, on the other hand, would be divided into parts, each conta
 
 \begin{table}[h]
 	\centering
-	\caption{Application functions header.}
+	\caption{Application function's header.}
 	\begin{tabular}{r|l|l}
 		\bf{Length (bytes)} & \bf{Field} & \bf{Format} \\
 		\hline
@@ -106,7 +106,7 @@ typedef void (*f0_t)();
 \label{fig:macro}
 \end{figure}
 
-For calling important functions, the checksum of the function table can be checked immediately before jumping by incorporating modified interception macro. Normally this is not done.
+For calling important functions, the checksum of the function can be checked immediately before jumping by incorporating modified interception macro. Normally this is not done.
 
 \subsubsection{Global variables}
 
