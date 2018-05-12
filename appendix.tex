@@ -95,7 +95,7 @@ Disassembly of a very short (28 bytes total) function from the in-development \g
 00000000 <ec_cos>:
 \end{lstlisting}
 \begin{lstlisting}[language=C,frame=none]
-float (ec_cos)( float radIn ) {
+float ec_cos( float radIn ) {
 \end{lstlisting}
 \begin{lstlisting}[style=asm,frame=none]
    0:	b500      	push {lr}
@@ -112,6 +112,7 @@ float (ec_cos)( float radIn ) {
 \begin{lstlisting}[language=C,frame=none]
 	if (!MATH_USE_LUT || !MATH_HAS_TABLE())
 		return cosf( radIn );
+	// The function has an else part, which did not make it past the compilation step due to the shown preprocessor constants
 \end{lstlisting}
 \begin{lstlisting}[style=asm,frame=none]
   16:	bf00      	nop
