@@ -6,17 +6,19 @@ As shown, no existing solution fully covers the described use cases, and this ma
 
 \subsection{Requirements}
 
-Software updating system that would be more suitable for ESTCube-2 than any existing alternatives, must:
+Software updating system that would be more suitable for ESTCube-2 \gls{obc} than any existing alternatives, must:
 
 \begin{enumerate}
-	\item allow addition of program code without the need to re-transmit significant portions of already existing code, so that it could be used for small one-time subroutines as well.
-	\item allow changing a subset of existing code without the need to re-transmit significant portions of unchanged code, so that upload bandwidth and update application time would be minimized.
-	\item not require on-board modifications of uploaded code. This makes it possible to store code directly in internal flash in the case that external memory modules are unavailable.
+	\item allow addition of functions without the need to re-transmit significant portions of already existing code, so that it could also be used for small one-time subroutines.
+	\item allow changing a subset of existing software without the need to re-transmit significant portions of unchanged code, so that upload bandwidth and update application time would be minimized.
+	\item not require on-board modifications of uploaded code. This makes it possible to store code directly in internal flash if external memory modules are unavailable.
 	\item make it possible to rearrange functions on board. This enables defragmenting the internal flash.
 	\item not depend on \gls{os} features that are unavailable in a standard distribution of Free\-RTOS, since this is the \gls{os} planned for ESTCube-2 \gls{obc}.
 	\item not significantly reduce code performance compared to a system that uses full image replacement.
 	\item support full inter-component communication. This enables any unforeseen updates as well, which a predefined \gls{api} could limit.
 \end{enumerate}
+
+Not all of the identified requirements are mission critical for ESTCube-2, but fulfilling them increases the amount of available time and opportunities to carry out mission activities. Therefore they are all basis for the proposed solution.
 
 \subsection{Proposed solution}
 
