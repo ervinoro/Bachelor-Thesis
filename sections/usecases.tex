@@ -14,7 +14,9 @@ As it was on ESTCube-1 (a classic nonsegmented firmware), a minor code modificat
 
 \subsection{Use cases during ESTCube-2 mission}
 
-\subsubsection{Hardware, on which the software will be updated}\label{s:hardware}
+The hardware, on which the software will be updated, significantly affects the choice of updating method. This choice is also dependent on the properties of the updates themselves, which can differ notably due to different reasons causing the need for those updates.
+
+\subsubsection{ESTCube-2 hardware}\label{s:hardware}
 
 ESTCube-2 \gls{obc} will be centered around an STM32F767IIT6 \gls{mcu}, which has 2 mebibytes\footnotemark of internal flash and 516 kibibytes\footnotemark[\value{footnote}] of internal \gls{sram}. For the data of running programs the \gls{obc} has 2 mebibytes\footnotemark[\value{footnote}] of \gls{mram}. For external configuration tables, error logs, on-board statistics, and other data without strict latency restrictions, it has 3$\times$512 kibibytes\footnotemark[\value{footnote}] of \gls{fram}. Mass storage for firmware versions, measurements, and payload data is provided by 2$\times$32 mebibytes\footnotemark[\value{footnote}] of external flash.
 \cite{Haljaste2017}
