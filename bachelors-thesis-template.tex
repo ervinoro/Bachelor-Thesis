@@ -52,6 +52,16 @@
 % Suggested packages:
 \usepackage{microtype}  %towards typographic perfection...
 \usepackage{inconsolata} %nicer font for code listings. (Use \ttfamily for lstinline bastype)
+\makeatletter
+% there's no italic/slanted for Inconsolata
+\@namedef{T1/zi4/m/it}{<->ssub*zi4/m/n}
+\@namedef{T1/zi4/b/it}{<->ssub*zi4/b/n}
+\@namedef{T1/zi4/bx/it}{<->ssub*zi4/b/n}
+\@namedef{T1/zi4/m/sl}{<->ssub*zi4/m/n}
+\@namedef{T1/zi4/b/sl}{<->ssub*zi4/b/n}
+\@namedef{T1/zi4/bx/sl}{<->ssub*zi4/b/n}
+\makeatother
+
 \usepackage[parfill]{parskip} %no indents, empty lines instead
 
 
@@ -219,22 +229,15 @@
 % Proper way to create coloured code listings
 \usepackage{listings}
 \lstset{
-  %language=python,                % the language of the code
   language=C,
-  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
-  %numbers=left,                   % where to put the line-numbers
-  %numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
-  numberstyle=\tiny\color{gray},
-  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line
-                                   % will be numbered
-  numbersep=5pt,                   % how far the line-numbers are from the code
+  basicstyle=\ttfamily\footnotesize,        % the size of the fonts that are used for the code
   backgroundcolor=\color{white},   % choose the background color. You must add \usepackage{color}
   showspaces=false,                % show spaces adding particular underscores
   showstringspaces=false,          % underline spaces within strings
   showtabs=false,                  % show tabs within strings adding particular underscores
   frame = lines,
   %frame=single,                   % adds a frame around the code
-  rulecolor=\color{black},		   % if not set, the frame-color may be changed on line-breaks within
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within
                                    % not-black text (e.g. commens (green here))
   tabsize=2,                       % sets default tabsize to 2 spaces
   captionpos=b,                    % sets the caption-position to bottom
@@ -247,7 +250,7 @@
   commentstyle=\color{green!50!black},    % comment style
   stringstyle=\color{orange},       % string literal style
   escapeinside={\%*}{*)},          % if you want to add a comment within your code
-  morekeywords={*,game, fun}       % if you want to add more keywords to the set
+  morekeywords={}       % if you want to add more keywords to the set
 }
 \input{arm-assembler-latex-listings/lstlangarm.sty}
 \lstdefinestyle{asm}{
@@ -273,6 +276,7 @@
 % However, getting a corresponding illustrations is really painful
 \usepackage{pgfplots}
 \pgfplotsset{
+    compat=1.16,
     every first x axis line/.style={},
     every first y axis line/.style={},
     every first z axis line/.style={},

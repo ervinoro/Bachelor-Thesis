@@ -5,7 +5,7 @@ all: oro_informaatika_2018.pdf
 
 monitor:
 	$(MAKE)
-	inotifywait -mre close_write,moved_to,create --exclude $$(cat .gitignore | sed '/^$$\|^#.*/d' | sed 's/\./\\./' | sed 's/*/.*/' | head -c -1 | tr '\n' '|') . | while read -r directory events filename; do $(MAKE); done
+	inotifywait -mre close_write,moved_to,create --exclude $$(cat .gitignore | sed '/^$$\|^#.*/d' | sed 's/\./\\./' | sed 's/*/.*/' | sed 's/(/\\(/' | sed 's/)/\\)/' | sed 's/$$/$$/' | head -c -1 | tr '\n' '|') . | while read -r directory events filename; do $(MAKE); done
 
 variables_README.tex: Makefile README.md
 	(cat $(word 2,$^) | sed 's/^| \(\w*upervisor\): *| \([^A-Z]*\)\(\([A-Z].*\), .*  \)/| \1Titlepage: | \3\n| \1Name: | \2\4  /' | grep -v '|---|---  ' | sed 's/^# \(.*\)/| Title: | \1  /  ' | sed 's/| \(\w*\): *| \(.*\)  /\\newcommand{\\\1}{\2}/' | sed 's/^## \(.*\)/\\newcommand{\\\1}{/' ; echo '}' ) > $@
