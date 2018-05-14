@@ -14,7 +14,7 @@ Firmware contains a table generation function (Appendix~\ref{apx:gentable}) that
 
 \subsection{Function discovery and preparation}
 
-Aforementioned Python scripts were tested against simple test functions, as well as functions from the \gls{aocs} repositories. For discovering global variables, two methods were compared: parsing source code variable definitions, and compiling source with \texttt{-fdata-sections} to discover global variable names from symbol table. Former method was not sufficiently effective due to large amount of different global variables, including matrices and other complex types. Using the latter method, most functions and all global variables were successfully packaged.
+Aforementioned Python scripts were tested against simple test functions, as well as functions from the \gls{aocs} repositories. For discovering global variables, two methods were compared: parsing source code for variable definitions, and compiling source with \texttt{-fdata-sections} to discover global variable names from symbol table. Former method was not sufficiently effective due to large amount of different global variables, including matrices and other complex types. Using the latter method, most functions and all global variables were successfully packaged.
 
 \subsection{Running application functions}
 
@@ -118,4 +118,4 @@ Even when using \gls{pic}, the code uses expressions relative to the \gls{pc} to
 
 Research on documentation, an online forum (\url{https://stackoverflow.com/q/45371949/7088748}) and the compiler support mailing list (\url{https://gcc.gnu.org/ml/gcc-help/2018-03/msg00015.html}) have not revealed any potential solutions by the time of writing.
 
-This is not a fundamental problem with the proposed approach, since the compiler is already storing data (absolute memory addresses in this case) at the end of the \texttt{.text} section, and referencing it by \gls{pc}-relative expressions. The local constants could themselves be stored in the same way. Instead, this problem is caused by the fact that nobody has happened to implement a compiler flag to turn of the generation of \texttt{.rodata} section for local constants. This is probably due to lack of use cases prior to this work.
+This is not a fundamental problem with the proposed approach, since the compiler is already storing data (absolute memory addresses in this case) at the end of the \texttt{.text} section, and referencing it by \gls{pc}-relative expressions. The local constants could themselves be stored in the same way. Instead, this problem is caused by the fact that nobody has happened to implement a compiler flag to turn off the generation of \texttt{.rodata} section for local constants. This is probably due to lack of use cases prior to this work.
